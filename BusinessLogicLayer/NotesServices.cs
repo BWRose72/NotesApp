@@ -1,0 +1,39 @@
+﻿using DataAcessLayer;
+
+namespace BusinessLogicLayer
+{
+    public class NotesServices
+    {
+        private readonly NotesDAL notesDAL;
+
+        public List<(int, string)> GetNotesTitlesAndIDs()
+        {
+            return notesDAL.GetNotesTitlesAndIDs();
+        }
+
+        public string GetNoteContents(int noteID)
+        {
+            return notesDAL.GetNoteContents(noteID);
+        }
+
+        public bool CreateNote(string noteTitle, string noteContents)
+        {
+            return notesDAL.CreateNote(noteTitle, noteContents);
+        }
+
+        public bool UpdateNoteContents(int noteID, string noteContents)
+        {
+            return notesDAL.UpdateNoteContents(noteID, noteContents);
+        }
+
+        public bool DeleteNote(int noteID)
+        {
+            return notesDAL.DeleteNote(noteID);
+        }
+
+        public List<(int, string)> GetFilteredNotes(string tag)
+        {
+            return notesDAL.GetFilteredNotes(tag.ToLower());
+        }
+    }
+}
