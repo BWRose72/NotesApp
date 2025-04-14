@@ -9,13 +9,30 @@ namespace DataAcessLayer
 {
     public class TagsDAL
     {
+        public List<string> GetAllTags()
+        {
+            List<string> tags = new List<string>();
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand getTagsCMD = new SqlCommand($"SELECT TagContent FROM Tags", conn);
+                SqlDataReader reader = getTagsCMD.ExecuteReader();
+                while (reader.Read())
+                {
+                    tags.Add(reader[0].ToString());
+                }
+                reader.Close();
+            }
+            return tags;
+        }
+
         public List<string> GetNoteTags(int noteID)
         {
             List<string> tags = new List<string>();
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand getTagsCMD = new SqlCommand($"SELECT TagContent FROM Tags JOIN NotesTags ON Tags.TagID = NotesTags.TagID WHERE NoteID = {noteID}");
+                SqlCommand getTagsCMD = new SqlCommand($"SELECT TagContent FROM Tags JOIN NotesTags ON Tags.TagID = NotesTags.TagID WHERE NoteID = {noteID}", conn);
                 SqlDataReader reader = getTagsCMD.ExecuteReader();
                 while (reader.Read())
                 {

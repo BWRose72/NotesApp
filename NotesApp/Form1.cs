@@ -20,6 +20,7 @@ namespace NotesApp
             tagsServices = new TagsServices();
             LoadNotes();
         }
+
         private void LoadNotes()
         {
             
@@ -40,7 +41,7 @@ namespace NotesApp
                 list_TagsPG3.Items.Add(tags);
                 list_TagsPG4.Items.Add(tags);
             }
-        }*/
+        }
         private void btn_DeleteNote_Click(object sender, EventArgs e)
         {
             string note = list_NotesPG1.SelectedItem.ToString();

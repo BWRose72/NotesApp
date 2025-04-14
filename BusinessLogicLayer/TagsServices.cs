@@ -1,4 +1,5 @@
 ﻿using DataAcessLayer;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,16 @@ namespace BusinessLogicLayer
     public class TagsServices
     {
         private readonly TagsDAL tagsDAL;
+
+        public TagsServices()
+        {
+            tagsDAL = new TagsDAL();
+        }
+
+        public List<string> GetAllTags()
+        {
+            return tagsDAL.GetAllTags();
+        }
 
         public List<string> GetNoteTags(int noteID)
         {
