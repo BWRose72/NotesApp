@@ -6,6 +6,11 @@ namespace BusinessLogicLayer
     {
         private readonly NotesDAL notesDAL;
 
+        public NotesServices()
+        {
+            notesDAL = new NotesDAL();
+        }
+
         public List<(int, string)> GetNotesTitlesAndIDs()
         {
             return notesDAL.GetNotesTitlesAndIDs();

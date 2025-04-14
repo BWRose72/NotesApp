@@ -11,6 +11,7 @@ namespace NotesApp
         {
             InitializeComponent();
         }
+
         private void LoadNotes()
         {
 
@@ -23,6 +24,7 @@ namespace NotesApp
                 list_NotesPG6.Items.Add(note);
             }
         }
+
         private void LoadTags()
         {
             List<String> tags = new List<String>();//за извеждане на тагове
@@ -32,6 +34,7 @@ namespace NotesApp
                 list_TagsPG4.Items.Add(tags);
             }
         }
+
         private void btn_DeleteNote_Click(object sender, EventArgs e)
         {
             string note = list_NotesPG1.SelectedItem.ToString();
