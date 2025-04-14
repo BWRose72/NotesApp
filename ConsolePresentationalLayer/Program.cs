@@ -33,7 +33,7 @@ namespace ConsolePresentationalLayer
             switch (comm)
             {
                 case 1:
-                    ReadNote();
+                    ReadNote(PrintNotes(notesServices.GetNotesTitlesAndIDs()));
                     break;
                 case 2:
                     ReadFilteredNotesByTag();
@@ -55,26 +55,70 @@ namespace ConsolePresentationalLayer
             }
         }
 
-        static void CreateNote() { }
+        static void CreateNote()
+        {
+            Console.Clear();
+            Console.WriteLine(" ----- Note Creation ----- ");
+            Console.WriteLine("Note title: ");
+            string title = Console.ReadLine();
+
+            Console.WriteLine("\nContents (enter command 'end' to stop writing): ");
+            string contents = "";
+            string comm = Console.ReadLine();
+            while (comm.ToLower() != "end")
+            {
+                contents += "\n" + comm;
+                comm = Console.ReadLine();  
+            }
+
+            Console.WriteLine("Do you wish to save this note? ('y' for yes, any other input will be taken as a 'no')");
+            Console.WriteLine(title);
+            Console.WriteLine(contents);
+            if (Console.ReadLine().ToLower().Trim() == "y")
+            {
+                if (notesServices.CreateNote(title, contents))
+                {
+                    Console.WriteLine("Note saved!");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong.Please try again.");
+                    Menu();
+                }
+            }
+        }
 
         static void CreateTag() { }
 
-        static void ReadNote()
+        //needs a lot more work
+        static void ReadNote((int, string) note)
         {
-            Console.Clear();
-            Console.WriteLine("Notes: ");
-            var note = PrintNotes(notesServices.GetNotesTitlesAndIDs());
-            
             Console.Clear();
             Console.WriteLine(note.Item2 + "\n");
             Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n");
             Console.WriteLine("Tags: " + string.Join(", ", tagsServices.GetNoteTags(note.Item1)));
-            Console.ReadLine();
+            Console.WriteLine("What do you want to do with this note: \n1. Update its contents\n2. Delete it\n3.Add a tag\n4. Export to file\n 5. Return");
+
         }
 
-        static void DeleteNote() { }
+        static void DeleteNote(int noteID)
+        {
+            if (notesServices.DeleteNote(noteID))
+            { 
+                Console.WriteLine("Note successfully deleted;");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong. Please try again.");
+            }
+            return;
+        }
 
-        static void ReadFilteredNotesByTag() { }
+        static void ReadFilteredNotesByTag()
+        {
+            ReadNote(PrintNotes(notesServices.GetFilteredNotes("-----------------------tag---------------------")));
+        }
 
         static void ExportToFile() { }
 
@@ -84,6 +128,7 @@ namespace ConsolePresentationalLayer
 
         static (int, string) PrintNotes(List<(int, string)> notes)
         {
+            Console.WriteLine(" --- Notes --- ");
             foreach (var ti in notes)
             {
                 Console.WriteLine($"{ti.Item1 + 1}: {ti.Item2}");
