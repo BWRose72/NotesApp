@@ -15,7 +15,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand getTitlesAndIDsCMD = new SqlCommand("SELECT NoteID, NoteTitle FROM Notes2", conn);
+                SqlCommand getTitlesAndIDsCMD = new SqlCommand("SELECT NoteID, NoteTitle FROM Notes", conn);
                 SqlDataReader reader = getTitlesAndIDsCMD.ExecuteReader();
                 while (reader.Read())
                 {
@@ -32,7 +32,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand getContentsCMD = new SqlCommand($"SELECT NoteContents FROM Notes2 WHERE NoteID = {noteID}", conn);
+                SqlCommand getContentsCMD = new SqlCommand($"SELECT NoteContents FROM Notes WHERE NoteID = {noteID}", conn);
                 noteContents = getContentsCMD.ExecuteScalar().ToString();
             }
             return noteContents;
@@ -44,7 +44,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand createNoteCMD = new SqlCommand("INSERT INTO Notes2 (NoteTitle, NoteContents, DateCreated, DateUpdated) VALUES (@noteTitle, @noteContents, GETDATE(), GETDATE())", conn);
+                SqlCommand createNoteCMD = new SqlCommand("INSERT INTO Notes (NoteTitle, NoteContents, DateCreated, DateUpdated) VALUES (@noteTitle, @noteContents, GETDATE(), GETDATE())", conn);
                 createNoteCMD.Parameters.AddWithValue("@noteTitle", noteTitle);
                 createNoteCMD.Parameters.AddWithValue("@noteContents", noteContents);
                 if (createNoteCMD.ExecuteNonQuery() != 0)
@@ -59,7 +59,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand updateNoteCMD = new SqlCommand($"UPDATE Notes2 SET NoteContents = @noteContents, DateUpdated = GETDATE() WHERE NoteID = {noteID}", conn);
+                SqlCommand updateNoteCMD = new SqlCommand($"UPDATE Notes SET NoteContents = @noteContents, DateUpdated = GETDATE() WHERE NoteID = {noteID}", conn);
                 updateNoteCMD.Parameters.AddWithValue("@noteContents", noteContents);
                 if (updateNoteCMD.ExecuteNonQuery() != 0)
                     isNoteUpdated = true;
@@ -73,7 +73,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand deleteNoteCMD = new SqlCommand($"DELETE FROM Notes2 WHERE NoteID = {noteID}", conn);
+                SqlCommand deleteNoteCMD = new SqlCommand($"DELETE FROM Notes WHERE NoteID = {noteID}", conn);
                 if (deleteNoteCMD.ExecuteNonQuery() != 0)
                     isNoteDeleted = true;
             }
@@ -86,7 +86,7 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand getFilteredNotesCMD = new SqlCommand("SELECT NoteID, NoteTitle FROM Notes2 JOIN NotesTags ON Notes.NoteID = NotesTags.NoteID JOIN Tags ON Tags.TagID = NotesTags.TagID WHERE TagContent = @tag", conn);
+                SqlCommand getFilteredNotesCMD = new SqlCommand("SELECT NoteID, NoteTitle FROM Notes JOIN NotesTags ON Notes.NoteID = NotesTags.NoteID JOIN Tags ON Tags.TagID = NotesTags.TagID WHERE TagContent = @tag", conn);
                 getFilteredNotesCMD.Parameters.AddWithValue("@tag", tag);
                 SqlDataReader reader = getFilteredNotesCMD.ExecuteReader();
                 while (reader.Read())
