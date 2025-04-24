@@ -45,8 +45,7 @@ namespace ConsolePresentationalLayer
                     CreateNote();
                     break;
                 case 4:
-                    Console.Clear();
-                    SeeAllTags();
+                    ReadAllTags();
                     break;
                 case 5:
                     CreateTag();
@@ -60,29 +59,52 @@ namespace ConsolePresentationalLayer
                     Menu();
                     break;
             }
+            Menu();
         }
 
         static void CreateNote()
         {
             Console.Clear();
             Console.WriteLine(" ----- Note Creation ----- ");
-            Console.WriteLine("Note title: ");
-            string title = Console.ReadLine();
+            Console.Write("Note title: ");
+            string title = Console.ReadLine().Trim();
+
+            while (string.IsNullOrEmpty(title) && title.ToLower() == "exit")
+            {
+                Console.WriteLine("Note title cannot be empty. Please enter a valid note title. Enter 'exit' to exit.");
+                Console.Write("Note title: ");
+                title = Console.ReadLine().Trim();
+            }
 
             Console.WriteLine("\nContents (enter command 'end' to stop writing): ");
             string contents = "";
-            string comm = Console.ReadLine();
-            while (comm.ToLower() != "end")
+            string line = Console.ReadLine().Trim();
+
+            while (line.ToLower() != "end")
             {
-                contents += "\n" + comm;
-                comm = Console.ReadLine();  
+                contents += "\n" + line;
+                line = Console.ReadLine();  
             }
 
-            Console.WriteLine("Do you wish to save this note? ('y' for yes, 'n' for don't save and delete, any other input is not accepted)");
+            Console.WriteLine("--- Note ---");
             Console.WriteLine(title);
             Console.WriteLine(contents);
-            string comm2 = Console.ReadLine().ToLower().Trim();
-            if (comm2 == "y")
+            Console.WriteLine("--- End Note ---");
+            Console.WriteLine("Do you wish to save this note? ('y' for yes, 'n' for don't save and delete, any other input is not accepted)");
+            string comm = Console.ReadLine().ToLower().Trim();
+
+            while (comm != "y" && comm != "n")
+            {
+                Console.Clear();
+                Console.WriteLine("--- Note ---");
+                Console.WriteLine(title);
+                Console.WriteLine(contents);
+                Console.WriteLine("--- End Note ---");
+                Console.WriteLine("Do you wish to save this note? ('y' for yes, 'n' for don't save and delete, any other input is not accepted)");
+                comm = Console.ReadLine().ToLower().Trim();
+            }
+
+            if (comm == "y")
             {
                 if (notesServices.CreateNote(title, contents))
                 {
@@ -96,7 +118,7 @@ namespace ConsolePresentationalLayer
                     Menu();
                 }
             }
-            else if (comm2 == "n")
+            else if (comm == "n")
             {
                 Console.WriteLine("Note deleted! Press enter to continue.");
                 Console.ReadLine();
@@ -112,21 +134,52 @@ namespace ConsolePresentationalLayer
 
             string tagContent = Console.ReadLine().Trim().ToLower();
 
-            Console.Write("Do you want to save this tag?\nEnter 'y' to save or 'n' to not save, delete, and return to menu: ");
-            string comm = Console.ReadLine().ToLower().Trim();
+            if (tagContent.Length > 100)
+            {
+                Console.WriteLine("Tag is too long. Press Enter to continue...");
+                Console.ReadLine();
+                Menu();
+            }
 
+            if (tagsServices.GetAllTags().Contains(tagContent))
+            {
+                Console.WriteLine("Tag already exists. Press Enter to continue...");
+                Console.ReadLine();
+                Menu();
+            }
+
+            if (string.IsNullOrWhiteSpace(tagContent))
+            {
+                Console.WriteLine("Tag cannot be empty. Press Enter to continue...");
+                Console.ReadLine();
+                Menu();
+            }
+
+            Console.Write($"Do you want to save this tag: {tagContent}\nEnter 'y' to save or 'n' to not save, delete, and return to menu: ");
+            string comm = Console.ReadLine().ToLower().Trim();
+            while (comm != "y" && comm != "n")
+            {
+                Console.Write($"Do you want to save this tag: {tagContent}\nEnter 'y' to save or 'n' to not save, delete, and return to menu: ");
+                comm = Console.ReadLine().ToLower().Trim();
+            }
             if (comm == "y")
             {
-                tagsServices.CreateTag(tagContent);
+                if (tagsServices.CreateTag(tagContent))
+                {
+                    Console.WriteLine("Tag saved! Press Enter to continue...");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.ReadLine();
+                    CreateTag();
+                }
             }
             else if (comm == "n")
             {
                 Console.Clear();
                 Menu();
-            }
-            else
-            {
-                return;
             }
             Console.ReadLine();
             Menu();
@@ -191,7 +244,7 @@ namespace ConsolePresentationalLayer
         {
             Console.Clear();
 
-            int tagCount = SeeAllTags();
+            int tagCount = PrintAllTags();
 
             Console.Write("Number of the tag: ");
             int tagNum;
@@ -209,7 +262,7 @@ namespace ConsolePresentationalLayer
 
         static void AddTagToNote(int noteID) { }
 
-        static int SeeAllTags()
+        static int  PrintAllTags()
         {
             var tagsList = tagsServices.GetAllTags();
 
@@ -221,13 +274,22 @@ namespace ConsolePresentationalLayer
                 Menu();
             }
 
-            Console.WriteLine("All tags: ");
+            Console.WriteLine("--- All tags --- ");
 
             for (int i = 0; i < tagsList.Count; i++)
             {
                 Console.WriteLine($"{i + 1}: {tagsList[i]}");
             }
             return tagsList.Count;
+        }
+
+        static void ReadAllTags()
+        {
+            Console.Clear();
+            PrintAllTags();
+            Console.WriteLine("\nPress Enter to return to menu.");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         static (int, string) PrintNotes(List<(int, string)> notes)
