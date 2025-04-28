@@ -182,7 +182,7 @@
             page5_UpdateNote.Padding = new Padding(3);
             page5_UpdateNote.Size = new Size(1130, 604);
             page5_UpdateNote.TabIndex = 5;
-            page5_UpdateNote.Text = "Промяна на бележки";
+            page5_UpdateNote.Text = "Промяна на съсържанието";
             // 
             // lbl_TagName
             // 
@@ -198,9 +198,9 @@
             label13.AutoSize = true;
             label13.Location = new Point(449, 22);
             label13.Name = "label13";
-            label13.Size = new Size(263, 28);
+            label13.Size = new Size(283, 28);
             label13.TabIndex = 9;
-            label13.Text = "Съдържание на бележка:";
+            label13.Text = "Съдържание на бележката:";
             // 
             // rich_NoteDescriptionPG5
             // 
@@ -286,7 +286,7 @@
             btn_AddTagToNote.Name = "btn_AddTagToNote";
             btn_AddTagToNote.Size = new Size(147, 233);
             btn_AddTagToNote.TabIndex = 5;
-            btn_AddTagToNote.Text = "Добави етикет към бележка";
+            btn_AddTagToNote.Text = "Добавяне на етикет към бележката";
             btn_AddTagToNote.UseVisualStyleBackColor = false;
             btn_AddTagToNote.Click += btn_AddTagToNote_Click;
             // 
@@ -478,7 +478,7 @@
             btn_DeleteNote.Name = "btn_DeleteNote";
             btn_DeleteNote.Size = new Size(226, 147);
             btn_DeleteNote.TabIndex = 5;
-            btn_DeleteNote.Text = "Изтриване на бележки";
+            btn_DeleteNote.Text = "Изтриване на бележката";
             btn_DeleteNote.UseVisualStyleBackColor = false;
             btn_DeleteNote.Click += btn_DeleteNote_Click;
             // 
@@ -490,7 +490,7 @@
             btn_ExportNote.Name = "btn_ExportNote";
             btn_ExportNote.Size = new Size(226, 147);
             btn_ExportNote.TabIndex = 4;
-            btn_ExportNote.Text = "Експортиране на бележки";
+            btn_ExportNote.Text = "Експортиране на бележката";
             btn_ExportNote.UseVisualStyleBackColor = false;
             btn_ExportNote.Click += btn_ExportNote_Click;
             // 
