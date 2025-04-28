@@ -40,5 +40,7 @@ namespace BusinessLogicLayer
         {
             return notesDAL.GetFilteredNotes(tag.ToLower());
         }
+
+      
     }
 }

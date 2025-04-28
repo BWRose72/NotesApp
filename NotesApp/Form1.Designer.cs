@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             page6_SearchNotes = new TabPage();
             list_NotesPG6 = new ListBox();
             label17 = new Label();
@@ -69,6 +70,7 @@
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
+            btn_DeleteTags = new Button();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -322,6 +324,7 @@
             // page3_CreateTag
             // 
             page3_CreateTag.BackColor = Color.Wheat;
+            page3_CreateTag.Controls.Add(btn_DeleteTags);
             page3_CreateTag.Controls.Add(label6);
             page3_CreateTag.Controls.Add(list_TagsPG3);
             page3_CreateTag.Controls.Add(btn_CreateTag);
@@ -359,7 +362,7 @@
             // btn_CreateTag
             // 
             btn_CreateTag.BackColor = Color.AntiqueWhite;
-            btn_CreateTag.Location = new Point(41, 304);
+            btn_CreateTag.Location = new Point(41, 192);
             btn_CreateTag.Name = "btn_CreateTag";
             btn_CreateTag.Size = new Size(397, 147);
             btn_CreateTag.TabIndex = 2;
@@ -371,7 +374,7 @@
             // 
             txt_TagNamePG3.BackColor = Color.AntiqueWhite;
             txt_TagNamePG3.ForeColor = Color.SaddleBrown;
-            txt_TagNamePG3.Location = new Point(41, 167);
+            txt_TagNamePG3.Location = new Point(41, 88);
             txt_TagNamePG3.Name = "txt_TagNamePG3";
             txt_TagNamePG3.Size = new Size(397, 34);
             txt_TagNamePG3.TabIndex = 1;
@@ -379,7 +382,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(41, 108);
+            label5.Location = new Point(41, 29);
             label5.Name = "label5";
             label5.Size = new Size(170, 28);
             label5.TabIndex = 0;
@@ -539,12 +542,24 @@
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
             // 
+            // btn_DeleteTags
+            // 
+            btn_DeleteTags.BackColor = Color.AntiqueWhite;
+            btn_DeleteTags.Location = new Point(41, 404);
+            btn_DeleteTags.Name = "btn_DeleteTags";
+            btn_DeleteTags.Size = new Size(397, 147);
+            btn_DeleteTags.TabIndex = 5;
+            btn_DeleteTags.Text = "Изтрий етикет";
+            btn_DeleteTags.UseVisualStyleBackColor = false;
+            btn_DeleteTags.Click += btn_DeleteTags_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1138, 637);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Notes App";
             page6_SearchNotes.ResumeLayout(false);
@@ -606,5 +621,6 @@
         private Button btn_DeleteNote;
         private Button btn_CreateNote;
         private RichTextBox rich_NoteDescriptionPG2;
+        private Button btn_DeleteTags;
     }
 }
