@@ -42,9 +42,9 @@ namespace BusinessLogicLayer
             return tagsDAL.DoesNoteHaveTag(noteID, tagID);
         }
 
-        public void AddTagToNote(int tagId, string? note)
+        public bool DeleteTag(int tagID)
         {
-            throw new NotImplementedException();
+            return tagsDAL.DeleteTag(tagID);
         }
     }
 }

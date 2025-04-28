@@ -52,6 +52,7 @@
             label7 = new Label();
             list_TagsPG4 = new ListBox();
             page3_CreateTag = new TabPage();
+            btn_DeleteTags = new Button();
             label6 = new Label();
             list_TagsPG3 = new ListBox();
             btn_CreateTag = new Button();
@@ -70,7 +71,6 @@
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            btn_DeleteTags = new Button();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -339,6 +339,17 @@
             page3_CreateTag.TabIndex = 2;
             page3_CreateTag.Text = "Създаване на етикет";
             // 
+            // btn_DeleteTags
+            // 
+            btn_DeleteTags.BackColor = Color.AntiqueWhite;
+            btn_DeleteTags.Location = new Point(41, 404);
+            btn_DeleteTags.Name = "btn_DeleteTags";
+            btn_DeleteTags.Size = new Size(397, 147);
+            btn_DeleteTags.TabIndex = 5;
+            btn_DeleteTags.Text = "Изтрий етикет";
+            btn_DeleteTags.UseVisualStyleBackColor = false;
+            btn_DeleteTags.Click += btn_DeleteTags_Click;
+            // 
             // label6
             // 
             label6.AutoSize = true;
@@ -541,17 +552,6 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
-            // 
-            // btn_DeleteTags
-            // 
-            btn_DeleteTags.BackColor = Color.AntiqueWhite;
-            btn_DeleteTags.Location = new Point(41, 404);
-            btn_DeleteTags.Name = "btn_DeleteTags";
-            btn_DeleteTags.Size = new Size(397, 147);
-            btn_DeleteTags.TabIndex = 5;
-            btn_DeleteTags.Text = "Изтрий етикет";
-            btn_DeleteTags.UseVisualStyleBackColor = false;
-            btn_DeleteTags.Click += btn_DeleteTags_Click;
             // 
             // Form1
             // 

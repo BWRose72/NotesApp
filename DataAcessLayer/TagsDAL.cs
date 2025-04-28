@@ -82,5 +82,20 @@ namespace DataAcessLayer
             }
             return noteHasTag;
         }
+
+        public bool DeleteTag(int tagID)
+        {
+            bool tagDeleted = false;
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand deleteTagCMD = new SqlCommand($"DELETE FROM Tags WHERE TagID = {tagID}", conn);
+                if (deleteTagCMD.ExecuteNonQuery() > 0)
+                {
+                    tagDeleted = true;
+                }
+            }
+            return tagDeleted;
+        }   
     }
 }
