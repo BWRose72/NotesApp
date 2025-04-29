@@ -59,8 +59,8 @@ namespace DataAcessLayer
             using (SqlConnection conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                SqlCommand updateNoteCMD = new SqlCommand($"UPDATE Notes SET NoteContents = @noteContents, DateUpdated = GETDATE() WHERE NoteID = {noteID}", conn);
-                updateNoteCMD.Parameters.AddWithValue("@noteContents", noteContents);
+                SqlCommand updateNoteCMD = new SqlCommand($"UPDATE Notes SET NoteContent = @noteContent, DateUpdated = GETDATE() WHERE NoteID = {noteID}", conn);
+                updateNoteCMD.Parameters.AddWithValue("@noteContent", noteContents);
                 if (updateNoteCMD.ExecuteNonQuery() != 0)
                     isNoteUpdated = true;
             }

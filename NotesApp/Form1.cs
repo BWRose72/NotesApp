@@ -134,7 +134,7 @@ namespace NotesApp
             int noteId = int.Parse(noteInfo[0]);
 
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
-            int tagId = tagsServices.GetTagIDFromContent(list_NotesPG4.SelectedItem.ToString());
+            int tagId = tagsServices.GetTagIDFromContent(list_TagsPG4.SelectedItem.ToString());
            
             if (tagsServices.AddTagToNote(noteId, tagId)) 
             {
