@@ -110,9 +110,7 @@ namespace NotesApp
             tagsServices.CreateTag(tagName);
 
             txt_TagNamePG3.Clear();
-
-            list_TagsPG3.Items.Add(tagName);
-            list_TagsPG4.Items.Add(tagName);
+            LoadTags();
 
 
             MessageBox.Show("The tag is created!");
@@ -125,11 +123,13 @@ namespace NotesApp
                 MessageBox.Show("You must select tag and note!");
             }
             string note = list_NotesPG4.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
             int tagId = int.Parse(selectedTag[0]);
             try
             {
-                tagsServices.AddTagToNote(/*noteID*/, tagId);
+                tagsServices.AddTagToNote(noteId,tagId);
                 MessageBox.Show("The tag is added to the note.");
             }
             catch
