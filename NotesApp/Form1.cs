@@ -213,9 +213,5 @@ namespace NotesApp
             rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
