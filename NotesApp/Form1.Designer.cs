@@ -517,7 +517,6 @@
             lst_Notes.Name = "lst_Notes";
             lst_Notes.Size = new Size(395, 508);
             lst_Notes.TabIndex = 3;
-            lst_Notes.SelectedIndexChanged += lst_Notes_SelectedIndexChanged;
             // 
             // list_NotesPG1
             // 

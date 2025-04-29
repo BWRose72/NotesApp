@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using BusinessLogicLayer;
 using Microsoft.VisualBasic;
 using System.Collections;
+
 namespace NotesApp
 {
     public partial class Form1 : Form
@@ -35,10 +36,11 @@ namespace NotesApp
                 list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
             }
         }
+
         private void LoadTags()
         {
             List<string> tags = tagsServices.GetAllTags();
-            foreach (var tag in tags)
+            foreach (string tag in tags)
             {
                 list_TagsPG3.Items.Add(tag);
                 list_TagsPG4.Items.Add(tag);
@@ -93,10 +95,7 @@ namespace NotesApp
             txt_NoteName.Clear();
             rich_NoteDescriptionPG2.Clear();
 
-            list_NotesPG1.Items.Add(noteName);
-            list_NotesPG4.Items.Add(noteName);
-            list_NotesPG5.Items.Add(noteName);
-            list_NotesPG6.Items.Add(noteName);
+            LoadNotes();
 
             MessageBox.Show("The note is created");
         }
@@ -130,7 +129,7 @@ namespace NotesApp
             int tagId = int.Parse(selectedTag[0]);
             try
             {
-                tagsServices.AddTagToNote(tagId, note);
+                tagsServices.AddTagToNote(/*noteID*/, tagId);
                 MessageBox.Show("The tag is added to the note.");
             }
             catch
@@ -164,7 +163,10 @@ namespace NotesApp
 
         private void list_NotesPG1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            string note = list_NotesPG1.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            lst_Notes.Items[0] = noteServices.GetNoteContents(noteId);
         }
 
         private void btn_DeleteTags_Click(object sender, EventArgs e)
@@ -186,14 +188,6 @@ namespace NotesApp
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
-        }
-
-        private void lst_Notes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string note = list_NotesPG1.SelectedItem.ToString();
-            string[] noteInfo = note.Split(": ");
-            int noteId = int.Parse(noteInfo[0]);
-            lst_Notes.Text = noteServices.GetNoteContents(noteId);
         }
     }
 }
