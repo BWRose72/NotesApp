@@ -33,7 +33,6 @@
             list_NotesPG6 = new ListBox();
             label17 = new Label();
             rich_NoteDescriptionPG6 = new RichTextBox();
-            txt_TagNamePG6 = new TextBox();
             btn_SearcNotes = new Button();
             label16 = new Label();
             label15 = new Label();
@@ -71,6 +70,7 @@
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
+            cmbBox_PG6 = new ComboBox();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -83,10 +83,10 @@
             // page6_SearchNotes
             // 
             page6_SearchNotes.BackColor = Color.Wheat;
+            page6_SearchNotes.Controls.Add(cmbBox_PG6);
             page6_SearchNotes.Controls.Add(list_NotesPG6);
             page6_SearchNotes.Controls.Add(label17);
             page6_SearchNotes.Controls.Add(rich_NoteDescriptionPG6);
-            page6_SearchNotes.Controls.Add(txt_TagNamePG6);
             page6_SearchNotes.Controls.Add(btn_SearcNotes);
             page6_SearchNotes.Controls.Add(label16);
             page6_SearchNotes.Controls.Add(label15);
@@ -128,14 +128,6 @@
             rich_NoteDescriptionPG6.TabIndex = 4;
             rich_NoteDescriptionPG6.Text = "";
             rich_NoteDescriptionPG6.TextChanged += rich_NoteDescriptionPG6_TextChanged;
-            // 
-            // txt_TagNamePG6
-            // 
-            txt_TagNamePG6.BackColor = Color.AntiqueWhite;
-            txt_TagNamePG6.Location = new Point(147, 55);
-            txt_TagNamePG6.Name = "txt_TagNamePG6";
-            txt_TagNamePG6.Size = new Size(448, 34);
-            txt_TagNamePG6.TabIndex = 2;
             // 
             // btn_SearcNotes
             // 
@@ -556,6 +548,14 @@
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
             // 
+            // cmbBox_PG6
+            // 
+            cmbBox_PG6.FormattingEnabled = true;
+            cmbBox_PG6.Location = new Point(147, 55);
+            cmbBox_PG6.Name = "cmbBox_PG6";
+            cmbBox_PG6.Size = new Size(448, 36);
+            cmbBox_PG6.TabIndex = 7;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -587,7 +587,6 @@
         private ListBox list_NotesPG6;
         private Label label17;
         private RichTextBox rich_NoteDescriptionPG6;
-        private TextBox txt_TagNamePG6;
         private Button btn_SearcNotes;
         private Label label16;
         private Label label15;
@@ -625,5 +624,6 @@
         private Button btn_CreateNote;
         private RichTextBox rich_NoteDescriptionPG2;
         private Button btn_DeleteTags;
+        private ComboBox cmbBox_PG6;
     }
 }

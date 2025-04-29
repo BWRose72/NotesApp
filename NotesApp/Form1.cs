@@ -43,6 +43,7 @@ namespace NotesApp
                 list_TagsPG3.Items.Add(tag);
                 list_TagsPG4.Items.Add(tag);
             }
+            cmbBox_PG6.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
         private void btn_DeleteNote_Click(object sender, EventArgs e)//idk
@@ -123,6 +124,7 @@ namespace NotesApp
             string note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
+            //
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
             int tagId = int.Parse(selectedTag[0]);
             try
@@ -149,13 +151,13 @@ namespace NotesApp
         private void btn_SearcNotes_Click(object sender, EventArgs e)//idk
         {
 
-            if (txt_TagNamePG6.Text == null)
+            if (cmbBox_PG6.SelectedItem == null)
             {
                 MessageBox.Show("Invalid tag!");
                 return;
             }
-            string tagName = txt_TagNamePG6.Text.Trim();
-            noteServices.GetFilteredNotes(tagName);
+           
+            noteServices.GetFilteredNotes(cmbBox_PG6.SelectedItem.ToString());
 
         }
 
