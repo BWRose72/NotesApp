@@ -91,6 +91,7 @@ namespace NotesApp
             if (txt_TagNamePG3.Text.Trim() == null || rich_NoteDescriptionPG2.Text == null)
             {
                 MessageBox.Show("Error! Please add valid note and description!");
+                return;
             }
             string noteName = txt_NoteName.Text.Trim();
             string noteDescription = rich_NoteDescriptionPG2.Text;
@@ -111,6 +112,7 @@ namespace NotesApp
             if (txt_TagNamePG3.Text.Trim() == null)
             {
                 MessageBox.Show("Error! Please add valid tag!");
+                return;
             }
             string tagName = txt_TagNamePG3.Text.Trim();
             tagsServices.CreateTag(tagName);
@@ -139,20 +141,34 @@ namespace NotesApp
             if (tagsServices.AddTagToNote(noteId, tagId)) 
             {
                 MessageBox.Show("The tag is added to the note.");
+                return;
             }
             else 
             { 
                 MessageBox.Show("The tag is already added.");
+                return;
             }
         }
 
         private void btn_UpdateNote_Click(object sender, EventArgs e)//ready
         {
+            if (list_NotesPG5.SelectedItem==null)
+            {
+                MessageBox.Show("You must select note!");
+                return;
+            }
             string note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             var noteDescription = rich_NoteDescriptionPG5.Text;
+            var confirmResult = MessageBox.Show("Are you sure you want to update this note?",
+              "Confirm Update", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.No)
+            {
+                return;
+            }
             noteServices.UpdateNoteContents(noteId, noteDescription);
+            MessageBox.Show("The note was updated!");
 
         }
 
