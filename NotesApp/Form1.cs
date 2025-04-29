@@ -78,7 +78,7 @@ namespace NotesApp
 
         private void btn_ExportNote_Click(object sender, EventArgs e)
         {
-           
+
 
         }
 
@@ -126,12 +126,12 @@ namespace NotesApp
             string note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
-            
+
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
             int tagId = tagsServices.GetTagIDFromContent(list_NotesPG4.SelectedItem.ToString());
             try
             {
-                tagsServices.AddTagToNote(noteId,tagId);
+                tagsServices.AddTagToNote(noteId, tagId);
                 MessageBox.Show("The tag is added to the note.");
             }
             catch
@@ -158,7 +158,7 @@ namespace NotesApp
                 MessageBox.Show("Invalid tag!");
                 return;
             }
-           
+
             noteServices.GetFilteredNotes(cmbBox_PG6.SelectedItem.ToString());
 
         }
@@ -168,7 +168,7 @@ namespace NotesApp
             string note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
-            lst_Notes.Items[0] = noteServices.GetNoteContents(noteId);
+            rich_NoteContentPG1.Text = noteServices.GetNoteContents(noteId);
         }
 
         private void btn_DeleteTags_Click(object sender, EventArgs e)
@@ -211,6 +211,11 @@ namespace NotesApp
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

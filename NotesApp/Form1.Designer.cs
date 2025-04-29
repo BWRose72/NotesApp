@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             page6_SearchNotes = new TabPage();
+            cmbBox_PG6 = new ComboBox();
             list_NotesPG6 = new ListBox();
             label17 = new Label();
             rich_NoteDescriptionPG6 = new RichTextBox();
@@ -66,11 +67,11 @@
             page1_Notes = new TabPage();
             btn_DeleteNote = new Button();
             btn_ExportNote = new Button();
-            lst_Notes = new ListBox();
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            cmbBox_PG6 = new ComboBox();
+            rich_NoteContentPG1 = new RichTextBox();
+            label3 = new Label();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -98,6 +99,14 @@
             page6_SearchNotes.Size = new Size(1130, 604);
             page6_SearchNotes.TabIndex = 6;
             page6_SearchNotes.Text = "Търсене по етикет";
+            // 
+            // cmbBox_PG6
+            // 
+            cmbBox_PG6.FormattingEnabled = true;
+            cmbBox_PG6.Location = new Point(147, 55);
+            cmbBox_PG6.Name = "cmbBox_PG6";
+            cmbBox_PG6.Size = new Size(448, 36);
+            cmbBox_PG6.TabIndex = 7;
             // 
             // list_NotesPG6
             // 
@@ -462,9 +471,10 @@
             // page1_Notes
             // 
             page1_Notes.BackColor = Color.Wheat;
+            page1_Notes.Controls.Add(label3);
+            page1_Notes.Controls.Add(rich_NoteContentPG1);
             page1_Notes.Controls.Add(btn_DeleteNote);
             page1_Notes.Controls.Add(btn_ExportNote);
-            page1_Notes.Controls.Add(lst_Notes);
             page1_Notes.Controls.Add(list_NotesPG1);
             page1_Notes.Controls.Add(label1);
             page1_Notes.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
@@ -498,17 +508,6 @@
             btn_ExportNote.Text = "Експортиране на бележката";
             btn_ExportNote.UseVisualStyleBackColor = false;
             btn_ExportNote.Click += btn_ExportNote_Click;
-            // 
-            // lst_Notes
-            // 
-            lst_Notes.BackColor = Color.AntiqueWhite;
-            lst_Notes.ForeColor = Color.SaddleBrown;
-            lst_Notes.FormattingEnabled = true;
-            lst_Notes.ItemHeight = 28;
-            lst_Notes.Location = new Point(723, 61);
-            lst_Notes.Name = "lst_Notes";
-            lst_Notes.Size = new Size(395, 508);
-            lst_Notes.TabIndex = 3;
             // 
             // list_NotesPG1
             // 
@@ -547,13 +546,24 @@
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
             // 
-            // cmbBox_PG6
+            // rich_NoteContentPG1
             // 
-            cmbBox_PG6.FormattingEnabled = true;
-            cmbBox_PG6.Location = new Point(147, 55);
-            cmbBox_PG6.Name = "cmbBox_PG6";
-            cmbBox_PG6.Size = new Size(448, 36);
-            cmbBox_PG6.TabIndex = 7;
+            rich_NoteContentPG1.BackColor = Color.AntiqueWhite;
+            rich_NoteContentPG1.Location = new Point(706, 61);
+            rich_NoteContentPG1.Name = "rich_NoteContentPG1";
+            rich_NoteContentPG1.Size = new Size(395, 508);
+            rich_NoteContentPG1.TabIndex = 6;
+            rich_NoteContentPG1.Text = "";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.SaddleBrown;
+            label3.Location = new Point(706, 20);
+            label3.Name = "label3";
+            label3.Size = new Size(143, 28);
+            label3.TabIndex = 7;
+            label3.Text = "Съдържание:";
             // 
             // Form1
             // 
@@ -615,7 +625,6 @@
         private Label label2;
         private TabPage page1_Notes;
         private Button btn_ExportNote;
-        private ListBox lst_Notes;
         private ListBox list_NotesPG1;
         private Label label1;
         private TabControl tabControl1;
@@ -624,5 +633,7 @@
         private RichTextBox rich_NoteDescriptionPG2;
         private Button btn_DeleteTags;
         private ComboBox cmbBox_PG6;
+        private RichTextBox rich_NoteContentPG1;
+        private Label label3;
     }
 }
