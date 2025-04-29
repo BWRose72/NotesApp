@@ -18,17 +18,17 @@ namespace BusinessLogicLayer
 
         public string GetNoteContents(int noteID)
         {
-            return notesDAL.GetNoteContents(noteID);
+            return notesDAL.GetNoteContent(noteID);
         }
 
-        public bool CreateNote(string noteTitle, string noteContents)
+        public bool CreateNote(string noteTitle, string noteContent)
         {
-            return notesDAL.CreateNote(noteTitle, noteContents);
+            return notesDAL.CreateNote(noteTitle, noteContent);
         }
 
-        public bool UpdateNoteContents(int noteID, string noteContents)
+        public bool UpdateNoteContents(int noteID, string noteContent)
         {
-            return notesDAL.UpdateNoteContents(noteID, noteContents);
+            return notesDAL.UpdateNoteContent(noteID, noteContent);
         }
 
         public bool DeleteNote(int noteID)
