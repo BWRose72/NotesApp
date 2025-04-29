@@ -225,6 +225,7 @@ namespace NotesApp
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG5.Text = noteServices.GetNoteContents(noteId);
+            label12.Text = "≈тикети: " + string.Join(", " + tagsServices.GetNoteTags(noteId));
         }
 
         private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)

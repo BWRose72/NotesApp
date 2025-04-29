@@ -38,7 +38,6 @@
             label16 = new Label();
             label15 = new Label();
             page5_UpdateNote = new TabPage();
-            lbl_TagName = new Label();
             label13 = new Label();
             rich_NoteDescriptionPG5 = new RichTextBox();
             btn_UpdateNote = new Button();
@@ -65,13 +64,13 @@
             label4 = new Label();
             label2 = new Label();
             page1_Notes = new TabPage();
+            label3 = new Label();
+            rich_NoteContentPG1 = new RichTextBox();
             btn_DeleteNote = new Button();
             btn_ExportNote = new Button();
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            rich_NoteContentPG1 = new RichTextBox();
-            label3 = new Label();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -170,7 +169,6 @@
             // page5_UpdateNote
             // 
             page5_UpdateNote.BackColor = Color.Wheat;
-            page5_UpdateNote.Controls.Add(lbl_TagName);
             page5_UpdateNote.Controls.Add(label13);
             page5_UpdateNote.Controls.Add(rich_NoteDescriptionPG5);
             page5_UpdateNote.Controls.Add(btn_UpdateNote);
@@ -185,15 +183,6 @@
             page5_UpdateNote.Size = new Size(1130, 604);
             page5_UpdateNote.TabIndex = 5;
             page5_UpdateNote.Text = "Промяна на съсържанието";
-            // 
-            // lbl_TagName
-            // 
-            lbl_TagName.AutoSize = true;
-            lbl_TagName.Location = new Point(549, 509);
-            lbl_TagName.Name = "lbl_TagName";
-            lbl_TagName.Size = new Size(82, 28);
-            lbl_TagName.TabIndex = 10;
-            lbl_TagName.Text = "label14";
             // 
             // label13
             // 
@@ -485,6 +474,25 @@
             page1_Notes.TabIndex = 0;
             page1_Notes.Text = "Бележки";
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.SaddleBrown;
+            label3.Location = new Point(706, 20);
+            label3.Name = "label3";
+            label3.Size = new Size(143, 28);
+            label3.TabIndex = 7;
+            label3.Text = "Съдържание:";
+            // 
+            // rich_NoteContentPG1
+            // 
+            rich_NoteContentPG1.BackColor = Color.AntiqueWhite;
+            rich_NoteContentPG1.Location = new Point(706, 61);
+            rich_NoteContentPG1.Name = "rich_NoteContentPG1";
+            rich_NoteContentPG1.Size = new Size(395, 508);
+            rich_NoteContentPG1.TabIndex = 6;
+            rich_NoteContentPG1.Text = "";
+            // 
             // btn_DeleteNote
             // 
             btn_DeleteNote.BackColor = Color.AntiqueWhite;
@@ -546,25 +554,6 @@
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
             // 
-            // rich_NoteContentPG1
-            // 
-            rich_NoteContentPG1.BackColor = Color.AntiqueWhite;
-            rich_NoteContentPG1.Location = new Point(706, 61);
-            rich_NoteContentPG1.Name = "rich_NoteContentPG1";
-            rich_NoteContentPG1.Size = new Size(395, 508);
-            rich_NoteContentPG1.TabIndex = 6;
-            rich_NoteContentPG1.Text = "";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.SaddleBrown;
-            label3.Location = new Point(706, 20);
-            label3.Name = "label3";
-            label3.Size = new Size(143, 28);
-            label3.TabIndex = 7;
-            label3.Text = "Съдържание:";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -600,7 +589,6 @@
         private Label label16;
         private Label label15;
         private TabPage page5_UpdateNote;
-        private Label lbl_TagName;
         private Label label13;
         private RichTextBox rich_NoteDescriptionPG5;
         private Button btn_UpdateNote;
