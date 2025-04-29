@@ -127,6 +127,7 @@ namespace NotesApp
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
                 MessageBox.Show("You must select tag and note!");
+                return;
             }
             string note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
@@ -134,13 +135,13 @@ namespace NotesApp
 
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
             int tagId = tagsServices.GetTagIDFromContent(list_NotesPG4.SelectedItem.ToString());
-            try
+           
+            if (tagsServices.AddTagToNote(noteId, tagId)) 
             {
-                tagsServices.AddTagToNote(noteId, tagId);
                 MessageBox.Show("The tag is added to the note.");
             }
-            catch
-            {
+            else 
+            { 
                 MessageBox.Show("The tag is already added.");
             }
         }
