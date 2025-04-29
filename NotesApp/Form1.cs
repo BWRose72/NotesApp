@@ -25,12 +25,14 @@ namespace NotesApp
 
         private void LoadNotes()
         {
-
+            list_NotesPG1.Items.Clear();
+            list_NotesPG4.Items.Clear();
+            list_NotesPG5.Items.Clear();
+            list_NotesPG6.Items.Clear();
             var notes = noteServices.GetNotesTitlesAndIDs();
             foreach (var note in notes)
             {
                 list_NotesPG1.Items.Add(note.Item1 + ": " + note.Item2);
-
                 list_NotesPG4.Items.Add(note.Item1 + ": " + note.Item2);
                 list_NotesPG5.Items.Add(note.Item1 + ": " + note.Item2);
                 list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
@@ -39,6 +41,8 @@ namespace NotesApp
 
         private void LoadTags()
         {
+            list_TagsPG3.Items.Clear();
+            list_TagsPG4.Items.Clear();
             List<string> tags = tagsServices.GetAllTags();
             foreach (string tag in tags)
             {
@@ -93,10 +97,11 @@ namespace NotesApp
 
             noteServices.CreateNote(noteName, noteDescription);
 
-            txt_NoteName.Clear();
-            rich_NoteDescriptionPG2.Clear();
 
             LoadNotes();
+
+            txt_NoteName.Clear();
+            rich_NoteDescriptionPG2.Clear();
 
             MessageBox.Show("The note is created");
         }
@@ -110,9 +115,9 @@ namespace NotesApp
             string tagName = txt_TagNamePG3.Text.Trim();
             tagsServices.CreateTag(tagName);
 
-            txt_TagNamePG3.Clear();
+            
             LoadTags();
-
+            txt_TagNamePG3.Clear();
 
             MessageBox.Show("The tag is created!");
         }
