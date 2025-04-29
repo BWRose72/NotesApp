@@ -97,5 +97,33 @@ namespace DataAcessLayer
             }
             return tagDeleted;
         }   
+
+        /*public bool DeleteTagFromNote(int noteID, int tagID)
+        {
+            bool tagDeleted = false;
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand deleteTagCMD = new SqlCommand($"DELETE FROM NotesTags WHERE NoteID = {noteID} AND TagID = {tagID}", conn);
+                if (deleteTagCMD.ExecuteNonQuery() > 0)
+                {
+                    tagDeleted = true;
+                }
+            }
+            return tagDeleted;
+        }*/
+
+        public int GetTagIDFromContent(string tagContent)
+        {
+            int tagID = 0;
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand getTagIDCMD = new SqlCommand($"SELECT TagID FROM Tags WHERE TagContent = @tagContent", conn);
+                getTagIDCMD.Parameters.AddWithValue("@tagContent", tagContent);
+                tagID = (int)getTagIDCMD.ExecuteScalar();
+            }
+            return tagID;
+        }
     }
 }
