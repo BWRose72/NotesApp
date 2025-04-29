@@ -52,6 +52,7 @@
             label7 = new Label();
             list_TagsPG4 = new ListBox();
             page3_CreateTag = new TabPage();
+            btn_DeleteTags = new Button();
             label6 = new Label();
             list_TagsPG3 = new ListBox();
             btn_CreateTag = new Button();
@@ -70,7 +71,6 @@
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            btn_DeleteTags = new Button();
             page6_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -127,6 +127,7 @@
             rich_NoteDescriptionPG6.Size = new Size(631, 424);
             rich_NoteDescriptionPG6.TabIndex = 4;
             rich_NoteDescriptionPG6.Text = "";
+            rich_NoteDescriptionPG6.TextChanged += rich_NoteDescriptionPG6_TextChanged;
             // 
             // txt_TagNamePG6
             // 
@@ -250,6 +251,7 @@
             list_NotesPG5.Name = "list_NotesPG5";
             list_NotesPG5.Size = new Size(371, 508);
             list_NotesPG5.TabIndex = 0;
+            list_NotesPG5.SelectedIndexChanged += list_NotesPG5_SelectedIndexChanged;
             // 
             // page4_AddTagToNote
             // 
@@ -338,6 +340,17 @@
             page3_CreateTag.Size = new Size(1130, 604);
             page3_CreateTag.TabIndex = 2;
             page3_CreateTag.Text = "Създаване на етикет";
+            // 
+            // btn_DeleteTags
+            // 
+            btn_DeleteTags.BackColor = Color.AntiqueWhite;
+            btn_DeleteTags.Location = new Point(41, 404);
+            btn_DeleteTags.Name = "btn_DeleteTags";
+            btn_DeleteTags.Size = new Size(397, 147);
+            btn_DeleteTags.TabIndex = 5;
+            btn_DeleteTags.Text = "Изтрий етикет";
+            btn_DeleteTags.UseVisualStyleBackColor = false;
+            btn_DeleteTags.Click += btn_DeleteTags_Click;
             // 
             // label6
             // 
@@ -504,6 +517,7 @@
             lst_Notes.Name = "lst_Notes";
             lst_Notes.Size = new Size(395, 508);
             lst_Notes.TabIndex = 3;
+            lst_Notes.SelectedIndexChanged += lst_Notes_SelectedIndexChanged;
             // 
             // list_NotesPG1
             // 
@@ -541,17 +555,6 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
-            // 
-            // btn_DeleteTags
-            // 
-            btn_DeleteTags.BackColor = Color.AntiqueWhite;
-            btn_DeleteTags.Location = new Point(41, 404);
-            btn_DeleteTags.Name = "btn_DeleteTags";
-            btn_DeleteTags.Size = new Size(397, 147);
-            btn_DeleteTags.TabIndex = 5;
-            btn_DeleteTags.Text = "Изтрий етикет";
-            btn_DeleteTags.UseVisualStyleBackColor = false;
-            btn_DeleteTags.Click += btn_DeleteTags_Click;
             // 
             // Form1
             // 

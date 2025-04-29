@@ -40,12 +40,12 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
             foreach (var tag in tags)
             {
-                list_TagsPG3.Items.Add(tags);
-                list_TagsPG4.Items.Add(tags);
+                list_TagsPG3.Items.Add(tag);
+                list_TagsPG4.Items.Add(tag);
             }
         }
 
-        private void btn_DeleteNote_Click(object sender, EventArgs e)
+        private void btn_DeleteNote_Click(object sender, EventArgs e)//idk
         {
             if (list_NotesPG1.SelectedItem == null)
             {
@@ -75,11 +75,11 @@ namespace NotesApp
 
         private void btn_ExportNote_Click(object sender, EventArgs e)
         {
-            string note = list_NotesPG1.SelectedItem.ToString();
+           
 
         }
 
-        private void btn_CreateNote_Click(object sender, EventArgs e)
+        private void btn_CreateNote_Click(object sender, EventArgs e)//ready
         {
             if (txt_TagNamePG3.Text.Trim() == null || rich_NoteDescriptionPG2.Text == null)
             {
@@ -89,10 +89,19 @@ namespace NotesApp
             string noteDescription = rich_NoteDescriptionPG2.Text;
 
             noteServices.CreateNote(noteName, noteDescription);
+
+            txt_NoteName.Clear();
+            rich_NoteDescriptionPG2.Clear();
+
+            list_NotesPG1.Items.Add(noteName);
+            list_NotesPG4.Items.Add(noteName);
+            list_NotesPG5.Items.Add(noteName);
+            list_NotesPG6.Items.Add(noteName);
+
             MessageBox.Show("The note is created");
         }
 
-        private void btn_CreateTag_Click(object sender, EventArgs e)
+        private void btn_CreateTag_Click(object sender, EventArgs e)//ready
         {
             if (txt_TagNamePG3.Text.Trim() == null)
             {
@@ -100,10 +109,17 @@ namespace NotesApp
             }
             string tagName = txt_TagNamePG3.Text.Trim();
             tagsServices.CreateTag(tagName);
+
+            txt_TagNamePG3.Clear();
+
+            list_TagsPG3.Items.Add(tagName);
+            list_TagsPG4.Items.Add(tagName);
+
+
             MessageBox.Show("The tag is created!");
         }
 
-        private void btn_AddTagToNote_Click(object sender, EventArgs e)
+        private void btn_AddTagToNote_Click(object sender, EventArgs e)//maybe ready
         {
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
@@ -123,7 +139,7 @@ namespace NotesApp
             }
         }
 
-        private void btn_UpdateNote_Click(object sender, EventArgs e)
+        private void btn_UpdateNote_Click(object sender, EventArgs e)//ready
         {
             string note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
@@ -133,7 +149,7 @@ namespace NotesApp
 
         }
 
-        private void btn_SearcNotes_Click(object sender, EventArgs e)
+        private void btn_SearcNotes_Click(object sender, EventArgs e)//idk
         {
 
             if (txt_TagNamePG6.Text == null)
@@ -154,6 +170,30 @@ namespace NotesApp
         private void btn_DeleteTags_Click(object sender, EventArgs e)
         {
             //delete tags
+        }
+
+        private void list_NotesPG5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string note = list_NotesPG5.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            rich_NoteDescriptionPG5.Text = noteServices.GetNoteContents(noteId);
+        }
+
+        private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)
+        {
+            string note = list_NotesPG6.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
+        }
+
+        private void lst_Notes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string note = list_NotesPG1.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            lst_Notes.Text = noteServices.GetNoteContents(noteId);
         }
     }
 }
