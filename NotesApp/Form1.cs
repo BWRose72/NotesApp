@@ -126,9 +126,9 @@ namespace NotesApp
             string note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
-            //
+            
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
-            int tagId = int.Parse(selectedTag[0]);
+            int tagId = tagsServices.GetTagIDFromContent(list_NotesPG4.SelectedItem.ToString());
             try
             {
                 tagsServices.AddTagToNote(noteId,tagId);
@@ -173,7 +173,28 @@ namespace NotesApp
 
         private void btn_DeleteTags_Click(object sender, EventArgs e)
         {
-            //delete tags
+            if (list_TagsPG3.SelectedItem == null)
+            {
+                MessageBox.Show("Select tag!");
+                return;
+            }
+            string tag = list_TagsPG3.SelectedItem.ToString();
+            string[] tagInfo = tag.Split(": ");
+            int tafId = int.Parse(tagInfo[0]);
+
+            var confirmResult = MessageBox.Show("Are you sure you want to delete this tag?",
+                "Confirm Delete", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.No)
+            {
+                return;
+            }
+
+            tagsServices.DeleteTag(tafId);
+
+            list_TagsPG3.Items.Remove(tafId);
+            list_TagsPG4.Items.Remove(tafId);
+
+            MessageBox.Show("The tag is deleted!");
         }
 
         private void list_NotesPG5_SelectedIndexChanged(object sender, EventArgs e)
