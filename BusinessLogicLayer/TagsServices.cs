@@ -41,5 +41,15 @@ namespace BusinessLogicLayer
         {
             return tagsDAL.DoesNoteHaveTag(noteID, tagID);
         }
+
+        public bool DeleteTag(int tagID)
+        {
+            return tagsDAL.DeleteTag(tagID);
+        }
+
+        public int GetTagIDFromContent(string tagContent)
+        {
+            return tagsDAL.GetTagIDFromContent(tagContent);
+        }
     }
 }
