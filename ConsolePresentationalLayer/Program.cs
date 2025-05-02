@@ -1,4 +1,6 @@
-﻿using BusinessLogicLayer;
+﻿using Azure;
+using BusinessLogicLayer;
+using Microsoft.VisualBasic;
 using System.ComponentModel.Design;
 using System.Threading.Channels;
 using static Azure.Core.HttpHeader;
@@ -18,46 +20,32 @@ namespace ConsolePresentationalLayer
         static void Menu()
         {
             Console.Clear();
-            Console.WriteLine("1  Read notes (UpdateContents/Delete/Add tag/ExportToFile)");
-            Console.WriteLine("2  Find FilteredNotes (Add function to redirect to 1.)");
-            Console.WriteLine("3  CreateNote");
-            Console.WriteLine("4  SeeAllTags");
-            Console.WriteLine("5  CreateTag");
-            Console.WriteLine("6  Exit application");
-
-            Console.Write("Please choose an action: ");
-            int comm;
-            if (!int.TryParse(Console.ReadLine(), out comm))
-            {
-                Console.WriteLine("Please enter a valid option number. Press Enter to continue...");
-                Console.ReadLine();
-                Menu();
-            }
-
+            Menu mainMenu = new Menu(" ----- Main Menu ----- ",
+                new string[] { "Read notes", "Find Notes Filtered by Tag", "Create Note", "See All Tags",
+                               "Create Tag", "Exit Application" });
+            int comm = mainMenu.ExSM();
             switch (comm)
             {
-                case 1:
+                case 0:
                     Console.Clear();
                     ReadNote(PrintNotes(notesServices.GetNotesTitlesAndIDs()));
                     break;
-                case 2:
+                case 1:
                     ReadFilteredNotesByTag();
                     break;
-                case 3:
+                case 2:
                     CreateNote();
                     break;
-                case 4:
+                case 3:
                     ReadAllTags();
                     break;
-                case 5:
+                case 4:
                     CreateTag();
                     break;
-                case 6:
+                case 5:
                     Environment.Exit(0);
                     break;
                 default:
-                    Console.WriteLine("Please enter a valid option number. Press enter to continue...");
-                    Console.ReadLine();
                     Menu();
                     break;
             }
@@ -68,14 +56,20 @@ namespace ConsolePresentationalLayer
         {
             Console.Clear();
             Console.WriteLine(" ----- Note Creation ----- ");
+
             Console.Write("Note title: ");
             string title = Console.ReadLine().Trim();
 
-            while (string.IsNullOrEmpty(title) && title.ToLower() == "exit")
+            while (string.IsNullOrEmpty(title) && title.ToLower() != "exit")
             {
                 Console.WriteLine("Note title cannot be empty. Please enter a valid note title. Enter 'exit' to exit.");
                 Console.Write("Note title: ");
                 title = Console.ReadLine().Trim();
+            }
+
+            if (title.ToLower() == "exit")
+            {
+                Menu();
             }
 
             Console.WriteLine("\nContents (enter command 'end' to stop writing): ");
@@ -92,22 +86,12 @@ namespace ConsolePresentationalLayer
             Console.WriteLine(title);
             Console.WriteLine(contents);
             Console.WriteLine("--- End Note ---\n");
-            Console.WriteLine("Do you wish to save this note? ('y' for yes, 'n' for don't save and delete, any other input is not accepted)");
-            string comm = Console.ReadLine().ToLower().Trim();
 
-            while (comm != "y" && comm != "n")
-            {
-                Console.Clear();
-                Console.WriteLine(" ----- Note Creation -----");
-                Console.WriteLine("\n--- Note ---");
-                Console.WriteLine(title);
-                Console.WriteLine(contents);
-                Console.WriteLine("--- End Note ---\n");
-                Console.WriteLine("Do you wish to save this note? ('y' for yes, 'n' for don't save and delete, any other input is not accepted)");
-                comm = Console.ReadLine().ToLower().Trim();
-            }
+            Menu yesNoMenu = new Menu("Do you want to save this note?",
+                new string[] { "Yes, save it", "No, return to note creation", "No, return to menu" });
+            int comm = yesNoMenu.ExSM();
 
-            if (comm == "y")
+            if (comm == 0)
             {
                 if (notesServices.CreateNote(title, contents))
                 {
@@ -122,10 +106,13 @@ namespace ConsolePresentationalLayer
                     Menu();
                 }
             }
-            else if (comm == "n")
+            else if (comm == 1)
             {
-                Console.WriteLine("Note deleted! Press enter to continue.");
-                Console.ReadLine();       
+                CreateNote();
+            }
+            else
+            {
+                Menu();
             }
         }
 
@@ -141,12 +128,12 @@ namespace ConsolePresentationalLayer
             {
                 Console.WriteLine("Tag is too long. Press Enter to continue...");
                 Console.ReadLine();
-                Menu();
+                CreateTag();
             }
 
             if (tagsServices.GetAllTags().Contains(tagContent))
             {
-                Console.WriteLine("Tag already exists. Press Enter to continue...");
+                Console.WriteLine("Tag already exists. Press Enter to return to menu...");
                 Console.ReadLine();
                 Menu();
             }
@@ -155,17 +142,13 @@ namespace ConsolePresentationalLayer
             {
                 Console.WriteLine("Tag cannot be empty. Press Enter to continue...");
                 Console.ReadLine();
-                Menu();
+                CreateTag();
             }
 
-            Console.Write($"Do you want to save this tag: {tagContent}\nEnter 'y' to save or 'n' to not save, delete, and return to menu: ");
-            string comm = Console.ReadLine().ToLower().Trim();
-            while (comm != "y" && comm != "n")
-            {
-                Console.Write($"Do you want to save this tag: {tagContent}\nEnter 'y' to save or 'n' to not save, delete, and return to menu: ");
-                comm = Console.ReadLine().ToLower().Trim();
-            }
-            if (comm == "y")
+            Menu yesNoMenu = new Menu("Do you want to save this tag?", new string[] { "Yes, save it", "No, return to tag creation", "No, return to menu" });
+            int comm = yesNoMenu.ExSM();
+
+            if (comm == 0)
             {
                 if (tagsServices.CreateTag(tagContent))
                 {
@@ -180,12 +163,15 @@ namespace ConsolePresentationalLayer
                     CreateTag();
                 }
             }
-            else if (comm == "n")
+            else if (comm == 1)
+            {
+                CreateTag();
+            }
+            else
             {
                 Console.Clear();
                 Menu();
             }
-            Console.ReadLine();
             Menu();
         }
 
@@ -195,35 +181,29 @@ namespace ConsolePresentationalLayer
             Console.Clear();
             PrintNote(note);
 
-            Console.WriteLine("\nWhat do you want to do with this note: \n1. Update its contents\n2. Delete it\n3. Add a tag\n4. Export to file\n5. Return to menu");
-
-            int comm;
-            if (!int.TryParse(Console.ReadLine(), out comm))
-            {
-                Console.WriteLine("Please enter a valid option number. Press Enter to continue...");
-                Console.ReadLine();
-                Menu();
-            }
+            Menu menu = new Menu("\nWhat do you want to do with this note:",
+                new string[] { "Update its contents", "Delete it", "Add a tag", "Export to file", "Return to menu" });
+            int comm = menu.ExSM();
 
             switch (comm)
             {
-                case 1:
+                case 0:
                     UpdateNoteContent(note.Item1);
                     break;
-                case 2:
+                case 1:
                     DeleteNote(note.Item1);
                     break;
-                case 3:
+                case 2:
                     AddTagToNote(note.Item1);
                     break;
-                case 4:
+                case 3:
                     ExportToFile(note.Item1);
                     break;
-                case 5:
+                case 4:
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("Please enter a valid option number. Press enter to continue...");
+                    Console.WriteLine("Something went wrong. Press Enter to return to menu...");
                     Console.ReadLine();
                     Menu();
                     break;
@@ -275,15 +255,27 @@ namespace ConsolePresentationalLayer
 
         static void AddTagToNote(int noteID)
         {
+            Console.WriteLine();
             int tagCount = PrintAllTags();
+
             Console.Write("Number of tag to add: ");
             int tagID;
+
             while (!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount)
             {
                 Console.WriteLine("Please enter a valid tag number. Press Enter to continue...");
             }
 
-            tagsServices.AddTagToNote(noteID, tagID);
+            try
+            {
+                tagsServices.AddTagToNote(noteID, tagID);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("This tag is already attached to the note. Press Enter to continue...");
+                Console.ReadLine();
+                throw;
+            }
         }
 
         static int  PrintAllTags()
@@ -337,8 +329,8 @@ namespace ConsolePresentationalLayer
 
         static void PrintNote((int, string) note)
         {
-            Console.WriteLine(note.Item2 + "\n");
-            Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n");
+            Console.WriteLine(new string('-', 20) + "\n" + note.Item2);
+            Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n" + new string('-', 20) + "\n");
 
             var noteTags = tagsServices.GetNoteTags(note.Item1);
             if (noteTags == null || noteTags.Count == 0)
