@@ -3,7 +3,7 @@ using BusinessLogicLayer;
 using Microsoft.VisualBasic;
 using System.ComponentModel.Design;
 using System.Threading.Channels;
-using static Azure.Core.HttpHeader;
+
 
 namespace ConsolePresentationalLayer
 {
@@ -20,11 +20,12 @@ namespace ConsolePresentationalLayer
         static void Menu()
         {
             Console.Clear();
+            Console.CursorVisible = false;
             Menu mainMenu = new Menu(" ----- Main Menu ----- ",
                 new string[] { "Read notes", "Find Notes Filtered by Tag", "Create Note", "See All Tags",
                                "Create Tag", "Exit Application" });
-            int comm = mainMenu.ExSM();
-            switch (comm)
+
+            switch (mainMenu.ExSM())
             {
                 case 0:
                     Console.Clear();
@@ -83,7 +84,7 @@ namespace ConsolePresentationalLayer
             }
 
             Console.WriteLine("\n--- Note ---");
-            Console.WriteLine(title);
+            Console.WriteLine(title + "\n");
             Console.WriteLine(contents);
             Console.WriteLine("--- End Note ---\n");
 
@@ -183,9 +184,8 @@ namespace ConsolePresentationalLayer
 
             Menu menu = new Menu("\nWhat do you want to do with this note:",
                 new string[] { "Update its contents", "Delete it", "Add a tag", "Export to file", "Return to menu" });
-            int comm = menu.ExSM();
 
-            switch (comm)
+            switch (menu.ExSM())
             {
                 case 0:
                     UpdateNoteContent(note.Item1);
@@ -197,7 +197,7 @@ namespace ConsolePresentationalLayer
                     AddTagToNote(note.Item1);
                     break;
                 case 3:
-                    ExportToFile(note.Item1);
+                    ExportNoteToFile(note.Item1, note.Item2);
                     break;
                 case 4:
                     Console.Clear();
@@ -249,7 +249,55 @@ namespace ConsolePresentationalLayer
             ReadNote(PrintNotes(filteredNotes));
         }
 
-        static void ExportToFile(int noteID) { throw new NotImplementedException(); }
+        static void ExportNoteToFile(int noteID, string noteTitle)
+        {
+            Console.Clear();
+            Console.WriteLine("----- Export Note to File -----");
+            Menu menu = new Menu("Where do you want to save the note?",
+                new string[] { "Desktop", "Documents folder", "New Folder in Documents folder", "Return to Menu" });
+
+            switch (menu.ExSM())
+            {
+                case 0:
+                    FileSaver.SaveFileToDesktop(noteTitle,
+                        notesServices.GetNoteContents(noteID),
+                        tagsServices.GetNoteTags(noteID).ToArray());
+                    break;
+                case 1:
+                    FileSaver.SaveFileToDocuments(noteTitle,
+                        notesServices.GetNoteContents(noteID),
+                        tagsServices.GetNoteTags(noteID).ToArray());
+                    break;
+                case 2:
+                    Console.Write("Enter the name of the new folder (or 'exit' to return): ");
+                    string folderName = Console.ReadLine().Trim();
+                    
+                    while (string.IsNullOrWhiteSpace(folderName) || folderName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                    {
+                        Console.Write("The folder name you entered is invalid. Make sure it does not contain any of these characters: + < > : \" / \\ | ? * ");
+                        Console.WriteLine("Enter the name of the new folder (or 'exit' to return): ");
+                        folderName = Console.ReadLine().Trim();
+                    }
+
+                    if (folderName.ToLower() == "exit")
+                    {
+                        ExportNoteToFile(noteID, noteTitle);
+                    }
+
+                    FileSaver.SaveFileToNewFolderInDocuments(folderName,
+                        noteTitle,
+                        notesServices.GetNoteContents(noteID),
+                        tagsServices.GetNoteTags(noteID).ToArray());
+                    break;
+                case 3:
+                    Menu();
+                    break;
+            }
+
+            Console.WriteLine("File successfully saved! Press Enter to return to menu.");
+            Console.ReadLine();
+            Menu();
+        }
 
         static void UpdateNoteContent(int noteID) { throw new NotImplementedException(); }
 
@@ -329,7 +377,7 @@ namespace ConsolePresentationalLayer
 
         static void PrintNote((int, string) note)
         {
-            Console.WriteLine(new string('-', 20) + "\n" + note.Item2);
+            Console.WriteLine(new string('-', 20) + "\n" + note.Item2 + "\n");
             Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n" + new string('-', 20) + "\n");
 
             var noteTags = tagsServices.GetNoteTags(note.Item1);
