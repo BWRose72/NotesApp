@@ -20,9 +20,9 @@ namespace ConsolePresentationalLayer
         {
             Console.Clear();
             Console.CursorVisible = false;
-            Menu mainMenu = new Menu(" ----- Main Menu ----- ",
-                new string[] { "Read notes", "Find Notes Filtered by Tag", "Create Note", "See All Tags",
-                               "Create Tag", "Exit Application" });
+            Menu mainMenu = new Menu(" ----- Меню ----- ",
+                new string[] { "Всички бележки", "Бележки филтрирани по етикет", "Създайте бележка", "Всички етикети",
+                               "Създайте етикет", "Изход от приложението" });
 
             switch (mainMenu.ExSM())
             {
@@ -55,60 +55,56 @@ namespace ConsolePresentationalLayer
         static void CreateNote()
         {
             Console.Clear();
-            Console.WriteLine(" ----- Note Creation ----- ");
+            Console.WriteLine(" ----- Създаване на бележка ----- ");
 
-            Console.Write("Note title: ");
+            Console.Write("Заглавие: ");
             string title = Console.ReadLine().Trim();
 
             while (string.IsNullOrEmpty(title) && title.ToLower() != "exit")
             {
-                Console.WriteLine("Note title cannot be empty. Please enter a valid note title. Enter 'exit' to exit.");
-                Console.Write("Note title: ");
+                Console.WriteLine("Загалвието не може да е празно. Моля въведете валидно заглавие.\nВъведете 'изход', за да се върнете в менюто.");
+                Console.Write("Заглавие: ");
                 title = Console.ReadLine().Trim();
             }
 
-            if (title.ToLower() == "exit")
+            if (title.ToLower() == "изход")
             {
                 Menu();
             }
 
-            Console.WriteLine("\nContents (enter command 'end' to stop writing): ");
+            Console.WriteLine("\nСъдържание (въведете 'стоп', за да приключите с писането): ");
             string contents = "";
             string line = Console.ReadLine().Trim();
 
-            while (line.ToLower() != "end")
+            while (line.ToLower() != "стоп")
             {
                 contents += "\n" + line;
                 line = Console.ReadLine();  
             }
 
-            Console.WriteLine("\n--- Note ---");
+            Console.WriteLine("\n--- Бележка ---");
             Console.WriteLine(title + "\n");
             Console.WriteLine(contents);
-            Console.WriteLine("--- End Note ---\n");
+            Console.WriteLine("--- Край на бележката ---\n");
 
-            Menu yesNoMenu = new Menu("Do you want to save this note?",
-                new string[] { "Yes, save it", "No, return to note creation", "No, return to menu" });
+            Menu yesNoMenu = new Menu("Искате ли да запазите тази бележка?",
+                new string[] { "Да", "Не"});
             int comm = yesNoMenu.ExSM();
 
             if (comm == 0)
             {
                 if (notesServices.CreateNote(title, contents))
                 {
-                    Console.WriteLine("Note saved! Press enter to return to menu.");
+                    Console.WriteLine("Бележката е запазена! Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
                     Console.Clear();
                 }
                 else
                 {
-                    Console.WriteLine("Something went wrong. Please try again. Press enter to continue.");
+                    Console.WriteLine("Нещо се обърка. Моля опитайте отново. Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
                     Menu();
                 }
-            }
-            else if (comm == 1)
-            {
-                CreateNote();
             }
             else
             {
@@ -119,70 +115,62 @@ namespace ConsolePresentationalLayer
         static void CreateTag()
         {
             Console.Clear();
-            Console.WriteLine(" ----- Tag Creation -----");
-            Console.WriteLine("What should the content of the tag be about (max 100 symbols, will be converted to lower-case): ");
+            Console.WriteLine(" ----- Създаване на етикет -----");
+            Console.WriteLine("Съдържанието на етикета трябва да е максимум 100 символа (ще бъде преобразувано в малки букви).");
+            Console.WriteLine("Въведете 'изход', за да се върнете в менюто.");
 
+            Console.Write("Съдържание: ");
             string tagContent = Console.ReadLine().Trim().ToLower();
 
             if (tagContent.Length > 100)
             {
-                Console.WriteLine("Tag is too long. Press Enter to continue...");
+                Console.WriteLine("Моля въведете съдържание по-малко от 100 символа. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 CreateTag();
             }
 
             if (tagsServices.GetAllTags().Contains(tagContent))
             {
-                Console.WriteLine("Tag already exists. Press Enter to return to menu...");
+                Console.WriteLine("Етикета вече съществува. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 Menu();
             }
 
             if (string.IsNullOrWhiteSpace(tagContent))
             {
-                Console.WriteLine("Tag cannot be empty. Press Enter to continue...");
+                Console.WriteLine("Етикета не може да е празен. Натиснете Enter, за да продължите.");
                 Console.ReadLine();
                 CreateTag();
             }
 
-            Menu yesNoMenu = new Menu("Do you want to save this tag?", new string[] { "Yes, save it", "No, return to tag creation", "No, return to menu" });
+            Menu yesNoMenu = new Menu($"Искате ли да запазите този етикет: {tagContent}?", new string[] { "Да", "Не" });
             int comm = yesNoMenu.ExSM();
 
             if (comm == 0)
             {
                 if (tagsServices.CreateTag(tagContent))
                 {
-                    Console.WriteLine("Tag saved! Press Enter to continue...");
+                    Console.WriteLine("Етикетът е запазен! Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
                     Console.Clear();
                 }
                 else
                 {
-                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.WriteLine("Нещо се обърка. Моля опитайте отново. Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
                     CreateTag();
                 }
             }
-            else if (comm == 1)
-            {
-                CreateTag();
-            }
-            else
-            {
-                Console.Clear();
-                Menu();
-            }
             Menu();
         }
 
-        //needs a lot more work
         static void ReadNote((int, string) note)
         {
             Console.Clear();
             PrintNote(note);
 
-            Menu menu = new Menu("\nWhat do you want to do with this note:",
-                new string[] { "Update its contents", "Delete it", "Add a tag", "Export to file", "Return to menu" });
+            Menu menu = new Menu("\nКакво искате да направите с тази бележка:",
+                new string[] { "Промененяне на съдържанието", "Изтриване", "Добавяне на етикет", "Запазване като текстов файл", "<- Меню" });
 
             switch (menu.ExSM())
             {
@@ -202,7 +190,7 @@ namespace ConsolePresentationalLayer
                     Console.Clear();
                     return;
                 default:
-                    Console.WriteLine("Something went wrong. Press Enter to return to menu...");
+                    Console.WriteLine("Нещо се обърка. Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
                     Menu();
                     break;
@@ -213,11 +201,11 @@ namespace ConsolePresentationalLayer
         {
             if (notesServices.DeleteNote(noteID))
             { 
-                Console.WriteLine("Note successfully deleted;");
+                Console.WriteLine("Бележката беше изтрита успешно.");
             }
             else
             {
-                Console.WriteLine("Something went wrong. Please try again.");
+                Console.WriteLine("Нещо се обърка. Моля пробвайте отново!");
             }
             return;
         }
@@ -228,17 +216,17 @@ namespace ConsolePresentationalLayer
 
             int tagCount = PrintAllTags();
 
-            Console.Write("Number of the tag: ");
+            Console.Write("Номер на етикета: ");
             int tagID;
             while (!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount)
             {
-                Console.WriteLine("Please enter a valid tag number. Press Enter to continue...");
+                Console.WriteLine("Моля въведете валиден номер. Натиснете Enter, за да продължите.");
             }
 
             var filteredNotes = notesServices.GetFilteredNotes(tagsServices.GetAllTags()[tagID - 1]);
             if (filteredNotes == null || filteredNotes.Count == 0)
             {
-                Console.WriteLine("There are no notes with this tag. Press enter to return to menu.");
+                Console.WriteLine("Няма бележки с този етикет. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 Console.Clear();
                 Menu();
@@ -251,9 +239,9 @@ namespace ConsolePresentationalLayer
         static void ExportNoteToFile(int noteID, string noteTitle)
         {
             Console.Clear();
-            Console.WriteLine("----- Export Note to File -----");
-            Menu menu = new Menu("Where do you want to save the note?",
-                new string[] { "Desktop", "Documents folder", "Folder in Documents folder", "Return to Menu" });
+            Console.WriteLine("----- Запазване на бележка като текстов файл -----");
+            Menu menu = new Menu("Къде искате да запазите тази бележка?",
+                new string[] { "На Работения плот", "В папката Документи", /*"В папка в папката Документи",*/ "<- Меню" });
 
             switch (menu.ExSM())
             {
@@ -267,7 +255,7 @@ namespace ConsolePresentationalLayer
                         notesServices.GetNoteContents(noteID),
                         tagsServices.GetNoteTags(noteID).ToArray());
                     break;
-                case 2:
+                case 2:/*
                     Console.Write("Enter the name of the new folder, if it does not exist one will be created (or 'exit' to return): ");
                     string folderName = Console.ReadLine().Trim();
                     
@@ -288,12 +276,12 @@ namespace ConsolePresentationalLayer
                         notesServices.GetNoteContents(noteID),
                         tagsServices.GetNoteTags(noteID).ToArray());
                     break;
-                case 3:
+                case 3:*/
                     Menu();
                     break;
             }
 
-            Console.WriteLine("File successfully saved! Press Enter to return to menu.");
+            Console.WriteLine("Файлът е запазен успешно! Натиснете Enter, за да се върнете в менюто.");
             Console.ReadLine();
             Menu();
         }
@@ -301,7 +289,7 @@ namespace ConsolePresentationalLayer
         static void UpdateNoteContents(int noteID, string noteTitle)
         {
             Console.Clear();
-            Console.WriteLine("----- Change Note Contents -----");
+            Console.WriteLine("----- Промяна на съдържанието -----");
             List<string> contents = notesServices.GetNoteContents(noteID).Split('\n').ToList();
 
             Console.WriteLine(noteTitle + "\n");
@@ -310,8 +298,8 @@ namespace ConsolePresentationalLayer
                 Console.WriteLine($"{i + 1}: {contents[i]}");
             }
 
-            Menu menu = new Menu("\nWhat do you want to do?",
-                new string[] { "Edit line", "Delete line", "Add line", "Save changes", "Discard changes", "Return to Menu"});
+            Menu menu = new Menu("\nКакво искате да направите?",
+                new string[] { "Редактирайте реда", "Изтрийте реда", "Добави реда", "Запази промените", "Отхвърли промените", "<- Меню"});
 
             int comm = menu.ExSM();
             while (comm != 3 || comm != 4)
@@ -319,30 +307,30 @@ namespace ConsolePresentationalLayer
                 switch (comm)
                 {
                     case 0:
-                        Console.Write("Enter the number of the line you want to edit: ");
+                        Console.Write("Въведете номерът на реда, който искате да редактирате: ");
                         int lineNumber;
 
                         while (!int.TryParse(Console.ReadLine().Trim(), out lineNumber) || lineNumber - 1 > contents.Count())
                         {
-                            Console.Write("Please enter a valid line number: ");
+                            Console.Write("Моля въведете валиден номер: ");
                         }
 
-                        Console.WriteLine("Enter new content for this line: ");
+                        Console.WriteLine("Въведете ново съдържание за този ред: ");
                         contents[lineNumber - 1] = Console.ReadLine().Trim();
                         break;
                     case 1:
-                        Console.Write("Enter the number of the line you want to delete: ");
+                        Console.Write("Въведете номерът на реда, който искате да изтриете: ");
                         int lineToDelete;
 
                         while (!int.TryParse(Console.ReadLine().Trim(), out lineToDelete) || lineToDelete - 1 > contents.Count())
                         {
-                            Console.Write("Please enter a valid line number: ");
+                            Console.Write("Моля въведете валиден номер: ");
                         }
 
                         contents.RemoveAt(lineToDelete - 1);
                         break;
                     case 2:
-                        Console.WriteLine("Enter the content of the new line: ");
+                        Console.WriteLine("Въведете ново съдържание за този ред: ");
                         string newLine = Console.ReadLine().Trim();
                         contents.Add(newLine);
                         break;
@@ -362,16 +350,16 @@ namespace ConsolePresentationalLayer
             {
                 if (!notesServices.UpdateNoteContents(noteID, string.Join('\n', contents)))
                 {
-                    Console.WriteLine("Something went wrong, please try again...");
+                    Console.WriteLine("Нещо се обърка. Моля пробвайте отново!");
                     UpdateNoteContents(noteID, noteTitle);
                 }
-                Console.WriteLine("Changes saved. Press Enter to return to Menu.");
+                Console.WriteLine("Промените са запазени. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 Menu();
             }
             else if (comm == 4)
             {
-                Console.WriteLine("Changes discarded. Press Enter to return to Menu.");
+                Console.WriteLine("Промените са отхвълени. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 Menu();
             }
@@ -386,12 +374,12 @@ namespace ConsolePresentationalLayer
             Console.WriteLine();
             int tagCount = PrintAllTags();
 
-            Console.Write("Number of tag to add: ");
+            Console.Write("Номер на етикета: ");
             int tagID;
 
             while (!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount)
             {
-                Console.WriteLine("Please enter a valid tag number. Press Enter to continue...");
+                Console.WriteLine("Моля въведете валиден номер. Натиснете Enter, за да продължите.");
             }
 
             try
@@ -400,7 +388,7 @@ namespace ConsolePresentationalLayer
             }
             catch (Exception)
             {
-                Console.WriteLine("This tag is already attached to the note. Press Enter to continue...");
+                Console.WriteLine("Този етикет вече е добавен към бележката. Натиснете Enter, за да продължите.");
                 Console.ReadLine();
                 throw;
             }
@@ -412,13 +400,13 @@ namespace ConsolePresentationalLayer
 
             if (tagsList == null || tagsList.Count == 0)
             {
-                Console.WriteLine("There are no tags. Press enter to return to menu.");
+                Console.WriteLine("Няма етикети. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
                 Console.Clear();
                 Menu();
             }
 
-            Console.WriteLine(" ----- All tags ----- ");
+            Console.WriteLine("----- Всички етикети ----- ");
 
             for (int i = 0; i < tagsList.Count; i++)
             {
@@ -431,25 +419,25 @@ namespace ConsolePresentationalLayer
         {
             Console.Clear();
             PrintAllTags();
-            Console.WriteLine("\nPress Enter to return to menu.");
+            Console.WriteLine("\nНатиснете Enter, за да се върнете в менюто.");
             Console.ReadLine();
             Console.Clear();
         }
 
         static (int, string) PrintNotes(List<(int, string)> notes)
         {
-            Console.WriteLine(" ----- Notes ----- ");
+            Console.WriteLine(" ----- Бележки ----- ");
             foreach (var it in notes)
             {
                 Console.WriteLine($"{it.Item1 + 1}: {it.Item2}");
             }
 
-            Console.Write("Enter note ID: ");
+            Console.Write("Въведете номерът на бележката: ");
             int noteID;
             while (!int.TryParse(Console.ReadLine(), out noteID) || !notes.Select(it => it.Item1).Contains(noteID - 1))
             {
-                Console.WriteLine("Something went wrong. Please enter a valid number.");
-                Console.Write("Enter note ID: ");
+                Console.WriteLine("Нещо се обърка. Моля въведете валиден номер!");
+                Console.Write("Въведете номерът на бележката: ");
             }
 
             return notes.First(it => it.Item1 == noteID - 1);
@@ -463,11 +451,11 @@ namespace ConsolePresentationalLayer
             var noteTags = tagsServices.GetNoteTags(note.Item1);
             if (noteTags == null || noteTags.Count == 0)
             {
-                Console.WriteLine("This note has no tags.");
+                Console.WriteLine("Тази бележка няма етикети.");
             }
             else
             {
-                Console.WriteLine("Tags: " + string.Join(", ", noteTags));
+                Console.WriteLine("Етикети: " + string.Join(", ", noteTags));
             }
 
         }

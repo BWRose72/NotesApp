@@ -39,7 +39,7 @@ namespace BusinessLogicLayer
             StreamWriter writer = new StreamWriter(filePath, false);
             writer.WriteLine(title + "\n");
             writer.WriteLine(content + "\n");
-            writer.WriteLine("Tags: " + string.Join(", ", tags));
+            writer.WriteLine("Етикети: " + string.Join(", ", tags));
             writer.Close();
         }
     }
