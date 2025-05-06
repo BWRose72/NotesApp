@@ -25,23 +25,21 @@ namespace ConsolePresentationalLayer
             for (int i = 0; i < options.Length; i++)
             {
                 string currOpt = options[i];
-                string be, af;
+                string be;
 
                 if (i == position)
                 {
                     be = "->";
-                    af = "<-";
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.White;
                 }
                 else
                 {
                     be = "  ";
-                    af = "  ";
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
-                Console.WriteLine($" {be} O {currOpt} {af} ");
+                Console.WriteLine($" {be} {currOpt}");
                 Console.ResetColor();
             }
         }

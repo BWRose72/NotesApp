@@ -1,9 +1,8 @@
-﻿using Azure;
-using BusinessLogicLayer;
+﻿using BusinessLogicLayer;
 using Microsoft.VisualBasic;
 using System.ComponentModel.Design;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
-
 
 namespace ConsolePresentationalLayer
 {
@@ -188,7 +187,7 @@ namespace ConsolePresentationalLayer
             switch (menu.ExSM())
             {
                 case 0:
-                    UpdateNoteContent(note.Item1);
+                    UpdateNoteContents(note.Item1, note.Item2);
                     break;
                 case 1:
                     DeleteNote(note.Item1);
@@ -254,7 +253,7 @@ namespace ConsolePresentationalLayer
             Console.Clear();
             Console.WriteLine("----- Export Note to File -----");
             Menu menu = new Menu("Where do you want to save the note?",
-                new string[] { "Desktop", "Documents folder", "New Folder in Documents folder", "Return to Menu" });
+                new string[] { "Desktop", "Documents folder", "Folder in Documents folder", "Return to Menu" });
 
             switch (menu.ExSM())
             {
@@ -269,7 +268,7 @@ namespace ConsolePresentationalLayer
                         tagsServices.GetNoteTags(noteID).ToArray());
                     break;
                 case 2:
-                    Console.Write("Enter the name of the new folder (or 'exit' to return): ");
+                    Console.Write("Enter the name of the new folder, if it does not exist one will be created (or 'exit' to return): ");
                     string folderName = Console.ReadLine().Trim();
                     
                     while (string.IsNullOrWhiteSpace(folderName) || folderName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
@@ -299,7 +298,88 @@ namespace ConsolePresentationalLayer
             Menu();
         }
 
-        static void UpdateNoteContent(int noteID) { throw new NotImplementedException(); }
+        static void UpdateNoteContents(int noteID, string noteTitle)
+        {
+            Console.Clear();
+            Console.WriteLine("----- Change Note Contents -----");
+            List<string> contents = notesServices.GetNoteContents(noteID).Split('\n').ToList();
+
+            Console.WriteLine(noteTitle + "\n");
+            for (int i = 0; i < contents.Count(); i++)
+            {
+                Console.WriteLine($"{i + 1}: {contents[i]}");
+            }
+
+            Menu menu = new Menu("\nWhat do you want to do?",
+                new string[] { "Edit line", "Delete line", "Add line", "Save changes", "Discard changes", "Return to Menu"});
+
+            int comm = menu.ExSM();
+            while (comm != 3 || comm != 4)
+            {
+                switch (comm)
+                {
+                    case 0:
+                        Console.Write("Enter the number of the line you want to edit: ");
+                        int lineNumber;
+
+                        while (!int.TryParse(Console.ReadLine().Trim(), out lineNumber) || lineNumber - 1 > contents.Count())
+                        {
+                            Console.Write("Please enter a valid line number: ");
+                        }
+
+                        Console.WriteLine("Enter new content for this line: ");
+                        contents[lineNumber - 1] = Console.ReadLine().Trim();
+                        break;
+                    case 1:
+                        Console.Write("Enter the number of the line you want to delete: ");
+                        int lineToDelete;
+
+                        while (!int.TryParse(Console.ReadLine().Trim(), out lineToDelete) || lineToDelete - 1 > contents.Count())
+                        {
+                            Console.Write("Please enter a valid line number: ");
+                        }
+
+                        contents.RemoveAt(lineToDelete - 1);
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter the content of the new line: ");
+                        string newLine = Console.ReadLine().Trim();
+                        contents.Add(newLine);
+                        break;
+                }
+                Console.Clear();
+
+                Console.WriteLine(noteTitle + "\n");
+                for (int i = 0; i < contents.Count(); i++)
+                {
+                    Console.WriteLine($"{i + 1}: {contents[i]}");
+                }
+
+                comm = menu.ExSM();
+            }
+
+            if (comm == 3)
+            {
+                if (!notesServices.UpdateNoteContents(noteID, string.Join('\n', contents)))
+                {
+                    Console.WriteLine("Something went wrong, please try again...");
+                    UpdateNoteContents(noteID, noteTitle);
+                }
+                Console.WriteLine("Changes saved. Press Enter to return to Menu.");
+                Console.ReadLine();
+                Menu();
+            }
+            else if (comm == 4)
+            {
+                Console.WriteLine("Changes discarded. Press Enter to return to Menu.");
+                Console.ReadLine();
+                Menu();
+            }
+            else
+            {
+                Menu();
+            }
+        }
 
         static void AddTagToNote(int noteID)
         {
