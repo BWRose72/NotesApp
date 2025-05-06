@@ -5,11 +5,11 @@ VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotesApp", "NotesApp.csproj", "{CE703EF5-9EF3-41C4-976B-275AC1A421FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcessLayer", "..\DataAcessLayer\DataAcessLayer.csproj", "{E4E5DEE2-17A0-44E8-A7AA-1D0CB2C26D61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAcessLayer", "..\DataAcessLayer\DataAcessLayer.csproj", "{E4E5DEE2-17A0-44E8-A7AA-1D0CB2C26D61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "..\BusinessLogicLayer\BusinessLogicLayer.csproj", "{2A3290AC-513A-4E58-B146-7EB0326236B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "..\BusinessLogicLayer\BusinessLogicLayer.csproj", "{2A3290AC-513A-4E58-B146-7EB0326236B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePresentationalLayer", "..\ConsolePresentationalLayer\ConsolePresentationalLayer.csproj", "{86D6CD7A-F793-47E8-BA24-01E942CBF125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsolePresentationalLayer", "..\ConsolePresentationalLayer\ConsolePresentationalLayer.csproj", "{86D6CD7A-F793-47E8-BA24-01E942CBF125}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

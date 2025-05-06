@@ -56,15 +56,15 @@ namespace NotesApp
         {
             if (list_NotesPG1.SelectedItem == null)
             {
-                MessageBox.Show("Select note!");
+                MessageBox.Show("Моля изберете бележка!");
                 return;
             }
             string note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
-            var confirmResult = MessageBox.Show("Are you sure you want to delete this note?",
-                "Confirm Delete", MessageBoxButtons.YesNo);
+            var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете тази бележка?",
+                "Потвърдете изтриването", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.No)
             {
                 return;
@@ -82,17 +82,42 @@ namespace NotesApp
 
         private void btn_ExportNote_Click(object sender, EventArgs e)
         {
+            if (list_NotesPG1.SelectedItem == null)
+            {
+                MessageBox.Show("Моля изберете бележка!");
+                return;
+            }
 
+            string note = list_NotesPG1.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
 
+            string noteContent = noteServices.GetNoteContents(noteId);
+            string fileName = noteInfo[1];
+
+            var folderDialog = new FolderBrowserDialog();
+            folderDialog.ShowDialog();
+            string folderPath = folderDialog.SelectedPath;
+
+            string filePath = Path.Combine(folderPath, fileName + ".txt");
+            FileSaver.SaveFile(filePath, fileName, noteContent, tagsServices.GetNoteTags(noteId).ToArray());
+            MessageBox.Show("Файлът е експортиран!");
         }
 
         private void btn_CreateNote_Click(object sender, EventArgs e)//ready
         {
-            if (txt_TagNamePG3.Text.Trim() == null || rich_NoteDescriptionPG2.Text == null)
+            if (txt_TagNamePG3.Text.Trim() == null)
             {
-                MessageBox.Show("Error! Please add valid note and description!");
+                MessageBox.Show("Моля въведете текст в полето за заглавие!");
                 return;
             }
+
+            if (rich_NoteDescriptionPG2.Text == null)
+            {
+                MessageBox.Show("Моля въведете текст в полето за съдържание!");
+                return;
+            }
+
             string noteName = txt_NoteName.Text.Trim();
             string noteDescription = rich_NoteDescriptionPG2.Text;
 
@@ -104,31 +129,30 @@ namespace NotesApp
             txt_NoteName.Clear();
             rich_NoteDescriptionPG2.Clear();
 
-            MessageBox.Show("The note is created");
+            MessageBox.Show("Бележката е създадена.");
         }
 
         private void btn_CreateTag_Click(object sender, EventArgs e)//ready
         {
             if (txt_TagNamePG3.Text.Trim() == null)
             {
-                MessageBox.Show("Error! Please add valid tag!");
+                MessageBox.Show("Моля въведете текст!");
                 return;
             }
             string tagName = txt_TagNamePG3.Text.Trim();
             tagsServices.CreateTag(tagName);
 
-            
             LoadTags();
             txt_TagNamePG3.Clear();
 
-            MessageBox.Show("The tag is created!");
+            //MessageBox.Show("Етикетът е създаден!");
         }
 
         private void btn_AddTagToNote_Click(object sender, EventArgs e)//maybe ready
         {
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
-                MessageBox.Show("You must select tag and note!");
+                MessageBox.Show("Моля изберете бележка и етикет!");
                 return;
             }
             string note = list_NotesPG4.SelectedItem.ToString();
@@ -140,12 +164,12 @@ namespace NotesApp
            
             if (tagsServices.AddTagToNote(noteId, tagId)) 
             {
-                MessageBox.Show("The tag is added to the note.");
+                MessageBox.Show("Етикетът е добавен към бележката.");
                 return;
             }
             else 
             { 
-                MessageBox.Show("The tag is already added.");
+                MessageBox.Show("Този етикет вече е добажен към бележката.");
                 return;
             }
         }
@@ -154,22 +178,15 @@ namespace NotesApp
         {
             if (list_NotesPG5.SelectedItem==null)
             {
-                MessageBox.Show("You must select note!");
+                MessageBox.Show("Моля изберете бележка!");
                 return;
             }
             string note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             var noteDescription = rich_NoteDescriptionPG5.Text;
-            var confirmResult = MessageBox.Show("Are you sure you want to update this note?",
-              "Confirm Update", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.No)
-            {
-                return;
-            }
             noteServices.UpdateNoteContents(noteId, noteDescription);
-            MessageBox.Show("The note was updated!");
-
+            MessageBox.Show("Бележката е променена!");
         }
 
         private void btn_SearcNotes_Click(object sender, EventArgs e)//idk
@@ -177,12 +194,15 @@ namespace NotesApp
 
             if (cmbBox_PG6.SelectedItem == null)
             {
-                MessageBox.Show("Invalid tag!");
+                MessageBox.Show("Моля изберете етикет!");
                 return;
             }
 
-            noteServices.GetFilteredNotes(cmbBox_PG6.SelectedItem.ToString());
-
+            list_NotesPG6.Items.Clear();
+            foreach (var note in noteServices.GetFilteredNotes(cmbBox_PG6.SelectedItem.ToString()))
+            {
+                list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
+            }
         }
 
         private void list_NotesPG1_SelectedIndexChanged(object sender, EventArgs e)
@@ -197,26 +217,26 @@ namespace NotesApp
         {
             if (list_TagsPG3.SelectedItem == null)
             {
-                MessageBox.Show("Select tag!");
+                MessageBox.Show("Моля изберете етикет!");
                 return;
             }
             string tag = list_TagsPG3.SelectedItem.ToString();
             string[] tagInfo = tag.Split(": ");
-            int tafId = int.Parse(tagInfo[0]);
+            int tagId = int.Parse(tagInfo[0]);
 
-            var confirmResult = MessageBox.Show("Are you sure you want to delete this tag?",
-                "Confirm Delete", MessageBoxButtons.YesNo);
+            var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете този етикет?",
+                "Потърдете изтриването", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.No)
             {
                 return;
             }
 
-            tagsServices.DeleteTag(tafId);
+            tagsServices.DeleteTag(tagId);
 
-            list_TagsPG3.Items.Remove(tafId);
-            list_TagsPG4.Items.Remove(tafId);
+            list_TagsPG3.Items.Remove(tagId);
+            list_TagsPG4.Items.Remove(tagId);
 
-            MessageBox.Show("The tag is deleted!");
+            //MessageBox.Show("Етикетът е изтрит!");
         }
 
         private void list_NotesPG5_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,8 +244,8 @@ namespace NotesApp
             string note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
+            label12.Text = "Етикети: " + string.Join(", ", tagsServices.GetNoteTags(noteId));
             rich_NoteDescriptionPG5.Text = noteServices.GetNoteContents(noteId);
-            label12.Text = "Етикети: " + string.Join(", " + tagsServices.GetNoteTags(noteId));
         }
 
         private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)

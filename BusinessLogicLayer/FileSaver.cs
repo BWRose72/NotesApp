@@ -21,6 +21,7 @@ namespace BusinessLogicLayer
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string subFolderPath = Path.Combine(path, folderName);
+            Directory.CreateDirectory(subFolderPath);
             string filePath = Path.Combine(subFolderPath, title + ".txt");
             SaveFile(filePath, title, content, tags);
         }
