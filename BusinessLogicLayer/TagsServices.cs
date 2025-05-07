@@ -51,5 +51,10 @@ namespace BusinessLogicLayer
         {
             return tagsDAL.GetTagIDFromContent(tagContent);
         }
+
+        public bool CheckIfNoteTagExists(int tagID, int noteID)
+        {
+            return tagsDAL.CheckIfNoteTagExists(tagID, noteID);
+        }
     }
 }

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using BusinessLogicLayer;
-using Microsoft.VisualBasic;
-using System.Collections;
 
 namespace NotesApp
 {
@@ -52,7 +50,7 @@ namespace NotesApp
             cmbBox_PG6.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
-        private void btn_DeleteNote_Click(object sender, EventArgs e)//idk
+        private void btn_DeleteNote_Click(object sender, EventArgs e)
         {
             if (list_NotesPG1.SelectedItem == null)
             {
@@ -60,6 +58,7 @@ namespace NotesApp
                 return;
             }
             string note = list_NotesPG1.SelectedItem.ToString();
+            list_NotesPG1.ClearSelected();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
@@ -104,7 +103,7 @@ namespace NotesApp
             MessageBox.Show("Файлът е експортиран!");
         }
 
-        private void btn_CreateNote_Click(object sender, EventArgs e)//ready
+        private void btn_CreateNote_Click(object sender, EventArgs e)
         {
             if (txt_TagNamePG3.Text.Trim() == null)
             {
@@ -132,7 +131,7 @@ namespace NotesApp
             MessageBox.Show("Бележката е създадена.");
         }
 
-        private void btn_CreateTag_Click(object sender, EventArgs e)//ready
+        private void btn_CreateTag_Click(object sender, EventArgs e)
         {
             if (txt_TagNamePG3.Text.Trim() == null)
             {
@@ -161,20 +160,20 @@ namespace NotesApp
 
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
             int tagId = tagsServices.GetTagIDFromContent(list_TagsPG4.SelectedItem.ToString());
-           
-            if (tagsServices.AddTagToNote(noteId, tagId)) 
+
+            try
             {
+                tagsServices.AddTagToNote(noteId, tagId);
                 MessageBox.Show("Етикетът е добавен към бележката.");
-                return;
             }
-            else 
-            { 
-                MessageBox.Show("Този етикет вече е добажен към бележката.");
-                return;
+            catch (Exception)
+            {
+                MessageBox.Show("Този етикет вече е добавен към бележката.");
+                throw;
             }
         }
 
-        private void btn_UpdateNote_Click(object sender, EventArgs e)//ready
+        private void btn_UpdateNote_Click(object sender, EventArgs e)
         {
             if (list_NotesPG5.SelectedItem==null)
             {
@@ -189,7 +188,7 @@ namespace NotesApp
             MessageBox.Show("Бележката е променена!");
         }
 
-        private void btn_SearcNotes_Click(object sender, EventArgs e)//idk
+        private void btn_SearcNotes_Click(object sender, EventArgs e)
         {
 
             if (cmbBox_PG6.SelectedItem == null)
@@ -207,6 +206,10 @@ namespace NotesApp
 
         private void list_NotesPG1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (list_NotesPG1.SelectedItem == null)
+            {
+                return;
+            }
             string note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
@@ -221,8 +224,7 @@ namespace NotesApp
                 return;
             }
             string tag = list_TagsPG3.SelectedItem.ToString();
-            string[] tagInfo = tag.Split(": ");
-            int tagId = int.Parse(tagInfo[0]);
+            int tagId = tagsServices.GetTagIDFromContent(tag);
 
             var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете този етикет?",
                 "Потърдете изтриването", MessageBoxButtons.YesNo);
@@ -233,8 +235,8 @@ namespace NotesApp
 
             tagsServices.DeleteTag(tagId);
 
-            list_TagsPG3.Items.Remove(tagId);
-            list_TagsPG4.Items.Remove(tagId);
+            list_TagsPG3.Items.Remove(tag);
+            list_TagsPG4.Items.Remove(tag);
 
             //MessageBox.Show("Етикетът е изтрит!");
         }
@@ -255,6 +257,5 @@ namespace NotesApp
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
         }
-
     }
 }

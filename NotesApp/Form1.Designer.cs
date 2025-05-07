@@ -182,7 +182,7 @@
             page5_UpdateNote.Padding = new Padding(3);
             page5_UpdateNote.Size = new Size(1130, 604);
             page5_UpdateNote.TabIndex = 5;
-            page5_UpdateNote.Text = "Промяна на съсържанието";
+            page5_UpdateNote.Text = "Промяна на съдържанието";
             // 
             // label13
             // 
@@ -265,7 +265,7 @@
             list_NotesPG4.ForeColor = Color.SaddleBrown;
             list_NotesPG4.FormattingEnabled = true;
             list_NotesPG4.ItemHeight = 28;
-            list_NotesPG4.Location = new Point(669, 57);
+            list_NotesPG4.Location = new Point(13, 57);
             list_NotesPG4.Name = "list_NotesPG4";
             list_NotesPG4.Size = new Size(447, 508);
             list_NotesPG4.TabIndex = 6;
@@ -286,7 +286,7 @@
             // 
             label8.AutoSize = true;
             label8.ForeColor = Color.SaddleBrown;
-            label8.Location = new Point(670, 20);
+            label8.Location = new Point(13, 20);
             label8.Name = "label8";
             label8.Size = new Size(197, 28);
             label8.TabIndex = 3;
@@ -296,7 +296,7 @@
             // 
             label7.AutoSize = true;
             label7.ForeColor = Color.SaddleBrown;
-            label7.Location = new Point(13, 20);
+            label7.Location = new Point(670, 20);
             label7.Name = "label7";
             label7.Size = new Size(187, 28);
             label7.TabIndex = 2;
@@ -308,7 +308,7 @@
             list_TagsPG4.ForeColor = Color.SaddleBrown;
             list_TagsPG4.FormattingEnabled = true;
             list_TagsPG4.ItemHeight = 28;
-            list_TagsPG4.Location = new Point(13, 57);
+            list_TagsPG4.Location = new Point(670, 57);
             list_TagsPG4.Name = "list_TagsPG4";
             list_TagsPG4.Size = new Size(447, 508);
             list_TagsPG4.TabIndex = 0;

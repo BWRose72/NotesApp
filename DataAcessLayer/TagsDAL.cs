@@ -64,6 +64,7 @@ namespace DataAcessLayer
             {
                 conn.Open();
                 SqlCommand addTagCMD = new SqlCommand($"INSERT INTO NotesTags VALUES ({noteID}, {tagID})", conn);
+                
                 if (addTagCMD.ExecuteNonQuery() != 0)
                     isTagAdded = true;
             }
@@ -109,6 +110,19 @@ namespace DataAcessLayer
                 tagID = (int)getTagIDCMD.ExecuteScalar();
             }
             return tagID;
+        }
+
+        public bool CheckIfNoteTagExists(int tagID, int noteID)
+        {
+            bool tagExists = false;
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand checkTagCMD = new SqlCommand($"SELECT COUNT(*) FROM NotesTags WHERE TagID = {tagID} AND NoteID = {noteID}", conn);
+                if ((int)checkTagCMD.ExecuteScalar() > 0)
+                    tagExists = true;
+            }
+            return tagExists;
         }
     }
 }
