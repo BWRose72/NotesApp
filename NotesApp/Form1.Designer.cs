@@ -117,6 +117,7 @@
             list_NotesPG6.Name = "list_NotesPG6";
             list_NotesPG6.Size = new Size(359, 424);
             list_NotesPG6.TabIndex = 6;
+            list_NotesPG6.SelectedIndexChanged += list_NotesPG6_SelectedIndexChanged;
             // 
             // label17
             // 
@@ -129,9 +130,11 @@
             // 
             // rich_NoteDescriptionPG6
             // 
+            rich_NoteDescriptionPG6.BackColor = Color.AntiqueWhite;
             rich_NoteDescriptionPG6.ForeColor = Color.SaddleBrown;
             rich_NoteDescriptionPG6.Location = new Point(452, 155);
             rich_NoteDescriptionPG6.Name = "rich_NoteDescriptionPG6";
+            rich_NoteDescriptionPG6.ReadOnly = true;
             rich_NoteDescriptionPG6.Size = new Size(631, 424);
             rich_NoteDescriptionPG6.TabIndex = 4;
             rich_NoteDescriptionPG6.Text = "";
@@ -489,6 +492,7 @@
             rich_NoteContentPG1.BackColor = Color.AntiqueWhite;
             rich_NoteContentPG1.Location = new Point(706, 61);
             rich_NoteContentPG1.Name = "rich_NoteContentPG1";
+            rich_NoteContentPG1.ReadOnly = true;
             rich_NoteContentPG1.Size = new Size(395, 508);
             rich_NoteContentPG1.TabIndex = 6;
             rich_NoteContentPG1.Text = "";

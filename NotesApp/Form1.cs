@@ -23,30 +23,33 @@ namespace NotesApp
 
         private void LoadNotes()
         {
+            var notes = noteServices.GetNotesTitlesAndIDs();
+
             list_NotesPG1.Items.Clear();
             list_NotesPG4.Items.Clear();
             list_NotesPG5.Items.Clear();
             list_NotesPG6.Items.Clear();
-            var notes = noteServices.GetNotesTitlesAndIDs();
+
             foreach (var note in notes)
             {
-                list_NotesPG1.Items.Add(note.Item1 + ": " + note.Item2);
-                list_NotesPG4.Items.Add(note.Item1 + ": " + note.Item2);
-                list_NotesPG5.Items.Add(note.Item1 + ": " + note.Item2);
-                list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
+                string item = note.Item1 + ": " + note.Item2;
+                list_NotesPG1.Items.Add(item);
+                list_NotesPG4.Items.Add(item);
+                list_NotesPG5.Items.Add(item);
+                list_NotesPG6.Items.Add(item);
             }
         }
 
         private void LoadTags()
         {
+            List<string> tags = tagsServices.GetAllTags();
+
             list_TagsPG3.Items.Clear();
             list_TagsPG4.Items.Clear();
-            List<string> tags = tagsServices.GetAllTags();
-            foreach (string tag in tags)
-            {
-                list_TagsPG3.Items.Add(tag);
-                list_TagsPG4.Items.Add(tag);
-            }
+            cmbBox_PG6.Items.Clear();
+
+            list_TagsPG3.Items.AddRange(tags.ToArray());
+            list_TagsPG4.Items.AddRange(tags.ToArray());
             cmbBox_PG6.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
@@ -175,7 +178,7 @@ namespace NotesApp
 
         private void btn_UpdateNote_Click(object sender, EventArgs e)
         {
-            if (list_NotesPG5.SelectedItem==null)
+            if (list_NotesPG5.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете бележка!");
                 return;
@@ -252,6 +255,18 @@ namespace NotesApp
 
         private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)
         {
+            string note = list_NotesPG6.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
+        }
+
+        private void list_NotesPG6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (list_NotesPG6.SelectedItem == null)
+            {
+                return;
+            }
             string note = list_NotesPG6.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
