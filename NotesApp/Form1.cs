@@ -79,7 +79,7 @@ namespace NotesApp
             list_NotesPG5.Items.Remove(note);
             list_NotesPG6.Items.Remove(note);
 
-            MessageBox.Show("The note is deleted!");
+            MessageBox.Show("Бележката е изтрита!");
         }
 
         private void btn_ExportNote_Click(object sender, EventArgs e)
@@ -103,7 +103,7 @@ namespace NotesApp
 
             string filePath = Path.Combine(folderPath, fileName + ".txt");
             FileSaver.SaveFile(filePath, fileName, noteContent, tagsServices.GetNoteTags(noteId).ToArray());
-            MessageBox.Show("Файлът е експортиран!");
+            MessageBox.Show("Файлът е запазен!");
         }
 
         private void btn_CreateNote_Click(object sender, EventArgs e)

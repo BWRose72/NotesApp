@@ -386,12 +386,12 @@ namespace ConsolePresentationalLayer
 
             while (!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount)
             {
-                Console.WriteLine("Моля въведете валиден номер. Натиснете Enter, за да продължите.");
+                Console.WriteLine("Моля въведете валиден номер.\nНомер на етикета: ");
             }
 
             if (tagsServices.CheckIfNoteTagExists(tagID, noteID)) 
             {
-                Console.WriteLine("Този етикет вече е добавен към бележката. Натиснете Enter, за да продължите.");
+                Console.WriteLine("Този етикет вече е добавен към бележката. Натиснете Enter, за да се върнете в мен.");
                 Console.ReadLine();
                 Menu();
             }
@@ -459,8 +459,8 @@ namespace ConsolePresentationalLayer
 
         static void PrintNote((int, string) note)
         {
-            Console.WriteLine(new string('-', 20) + "\n" + note.Item2);
-            Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n" + new string('-', 20) + "\n");
+            Console.WriteLine(new string('-', 40) + "\n" + note.Item2);
+            Console.WriteLine(notesServices.GetNoteContents(note.Item1) + "\n" + new string('-', 40) + "\n");
 
             var noteTags = tagsServices.GetNoteTags(note.Item1);
             if (noteTags == null || noteTags.Count == 0)

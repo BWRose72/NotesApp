@@ -41,6 +41,9 @@ namespace BusinessLogicLayer
             return notesDAL.GetFilteredNotes(tag.ToLower());
         }
 
-      
+        public List<(int, string)> GetNotesByContent(string content)
+        {
+            return notesDAL.GetNotesByContent(content.ToLower());
+        }
     }
 }

@@ -97,5 +97,23 @@ namespace DataAcessLayer
             }
             return titlesIDs;
         }
+
+        public List<(int, string)> GetNotesByContent(string content)
+        {
+            List<(int, string)> titlesIDs = new List<(int, string)>();
+            using (SqlConnection conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                SqlCommand getNotesCMD = new SqlCommand("SELECT NoteID, NoteTitle FROM Notes WHERE NoteContent LIKE @content", conn);
+                getNotesCMD.Parameters.AddWithValue("@content", "%" + content + "%");
+                SqlDataReader reader = getNotesCMD.ExecuteReader();
+                while (reader.Read())
+                {
+                    titlesIDs.Add(((int)reader[0], reader[1].ToString()));
+                }
+                reader.Close();
+            }
+            return titlesIDs;
+        }
     }
 }   
