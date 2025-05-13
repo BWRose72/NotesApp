@@ -22,9 +22,8 @@ namespace ConsolePresentationalLayer
         {
             Console.Clear();
             Console.CursorVisible = false;
-            Menu mainMenu = new Menu("----- Меню ----- ",
-                new string[] { "Всички бележки", "Бележки филтрирани по етикет", "Създайте бележка", "Всички етикети",
-                               "Създайте етикет", "Изход от приложението" });
+            Menu mainMenu = new Menu("----- Меню ----- ",  new string[] { "Всички бележки", "Търсене по съдържание", "Търсене по етикет",
+                "Нова бележка", "Всички етикети", "Нов етикет", "Изход от приложението" });
 
             switch (mainMenu.ExSM())
             {
@@ -33,31 +32,33 @@ namespace ConsolePresentationalLayer
                     AlterNote(PrintNotes(notesServices.GetNotesTitlesAndIDs()));
                     break;
                 case 1:
-                    AlterFilteredNotesByTag();
+                    AlterFilteredNotesByContent();
                     break;
                 case 2:
-                    CreateNote();
+                    AlterFilteredNotesByTag();
                     break;
                 case 3:
-                    ReadAllTags();
+                    CreateNote();
                     break;
                 case 4:
-                    CreateTag();
+                    ReadAllTags();
                     break;
                 case 5:
+                    CreateTag();
+                    break;
+                case 6:
                     Environment.Exit(0);
                     break;
                 default:
                     Menu();
                     break;
             }
-            Menu();
         }
 
         static void CreateNote()
         {
             Console.Clear();
-            Console.WriteLine("----- Създаване на бележка ----- ");
+            Console.WriteLine("----- Нова бележка ----- ");
 
             Console.Write("Заглавие: ");
             string title = Console.ReadLine().Trim();
@@ -109,33 +110,22 @@ namespace ConsolePresentationalLayer
         static void CreateTag()
         {
             Console.Clear();
-            Console.WriteLine(" ----- Създаване на етикет -----");
+            Console.WriteLine(" ----- Нов етикет -----");
             Console.WriteLine("Съдържанието на етикета трябва да е максимум 100 символа (ще бъде преобразувано в малки букви).");
-            Console.WriteLine("Въведете 'изход', за да се върнете в менюто.");
+            Console.WriteLine("Въведете 'и' за изход, за да се върнете в менюто.");
 
             Console.Write("Съдържание: ");
             string tagContent = Console.ReadLine().Trim().ToLower();
 
-            //Rework theseif statements - maybe sometnig with a while loop
-            if (tagContent.Length > 100)
+            while (tagContent != "и" || !IsTagValid(tagContent))
             {
-                Console.WriteLine("Моля въведете съдържание по-малко от 100 символа. Натиснете Enter, за да се върнете в менюто.");
-                Console.ReadLine();
-                CreateTag();
+                Console.Write("Съдържание ('и' за изход): ");
+                tagContent = Console.ReadLine().Trim().ToLower();
             }
 
-            if (tagsServices.GetAllTags().Contains(tagContent))
+            if (tagContent == "и")
             {
-                Console.WriteLine("Етикета вече съществува. Натиснете Enter, за да се върнете в менюто.");
-                Console.ReadLine();
-                Menu();
-            }
-
-            if (string.IsNullOrWhiteSpace(tagContent))
-            {
-                Console.WriteLine("Етикета не може да е празен. Натиснете Enter, за да продължите.");
-                Console.ReadLine();
-                CreateTag();
+                return;
             }
 
             Menu yesNoMenu = new Menu($"Искате ли да запазите този етикет: {tagContent}?", new string[] { "Да", "Не" });
@@ -205,6 +195,26 @@ namespace ConsolePresentationalLayer
             return;
         }
 
+        static void AlterFilteredNotesByContent()
+        {
+            Console.Clear();
+            Console.WriteLine("----- Търсене по съдържание -----");
+            Console.Write("Ключов израз: ");
+            string keyContent = Console.ReadLine();
+
+            var filteredNotes = notesServices.GetNotesByContent(keyContent);
+            if (filteredNotes == null || filteredNotes.Count == 0)
+            {
+                Console.WriteLine("Няма бележки с тaкова съдържание. Натиснете Enter, за да се върнете в менюто.");
+                Console.ReadLine();
+                Console.Clear();
+                Menu();
+            }
+
+            Console.WriteLine();
+            AlterNote(PrintNotes(filteredNotes));
+        }
+
         static void AlterFilteredNotesByTag()
         {
             Console.Clear();
@@ -236,6 +246,7 @@ namespace ConsolePresentationalLayer
             AlterNote(PrintNotes(filteredNotes));
         }
 
+        //REVISIT
         static void ExportNoteToFile(int noteID, string noteTitle)
         {
             Console.Clear();
@@ -488,6 +499,29 @@ namespace ConsolePresentationalLayer
             }
             Console.CursorVisible = false;
             return contents;
+        }
+
+        static bool IsTagValid(string tagContent)
+        {
+            if (tagContent.Length > 100)
+            {
+                Console.WriteLine("Моля въведете съдържание по-малко от 100 символа.");
+                return false;
+            }
+
+            if (tagsServices.GetAllTags().Contains(tagContent))
+            {
+                Console.WriteLine("Етикета вече съществува. Натиснете Enter, за да се върнете в менюто.");
+                Console.ReadLine();
+                Menu();
+            }
+
+            if (string.IsNullOrWhiteSpace(tagContent))
+            {
+                Console.WriteLine("Етикета не може да е празен.");
+                return false;
+            }
+            return true;
         }
     }
 }

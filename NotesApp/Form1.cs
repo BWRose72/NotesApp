@@ -150,7 +150,7 @@ namespace NotesApp
             //MessageBox.Show("Етикетът е създаден!");
         }
 
-        private void btn_AddTagToNote_Click(object sender, EventArgs e)//maybe ready
+        private void btn_AddTagToNote_Click(object sender, EventArgs e)
         {
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
