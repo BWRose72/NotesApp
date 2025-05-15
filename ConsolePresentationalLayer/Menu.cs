@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsolePresentationalLayer
 {
@@ -86,6 +82,5 @@ namespace ConsolePresentationalLayer
             Console.Write(new string(' ', Console.BufferWidth));
             Console.SetCursorPosition(0, cr);
         }
-
     }
 }

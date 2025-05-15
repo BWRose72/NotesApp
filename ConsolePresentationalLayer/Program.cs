@@ -1,8 +1,4 @@
 ﻿using BusinessLogicLayer;
-using Microsoft.VisualBasic;
-using System.ComponentModel.Design;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Channels;
 
 namespace ConsolePresentationalLayer
 {
@@ -15,17 +11,77 @@ namespace ConsolePresentationalLayer
         {
             Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Menu();
+            ShortMenu();
         }
 
         static void Menu()
         {
             Console.Clear();
             Console.CursorVisible = false;
-            Menu mainMenu = new Menu("----- Меню ----- ",  new string[] { "Всички бележки", "Търсене по съдържание", "Търсене по етикет",
-                "Нова бележка", "Всички етикети", "Нов етикет", "Изход от приложението" });
+            Menu mainMenu = new Menu("----- Меню ----- ", new string[] { "Всички бележки", "Търсене по съдържание", "Търсене по етикет", "Нова бележка", "Всички етикети", "Нов етикет", "Изход от приложението" });
+            while (true)
+            {
+                switch (mainMenu.ExSM())
+                {
+                    case 0:
+                        Console.Clear();
+                        AlterNote(PrintNotes(notesServices.GetNotesTitlesAndIDs()));
+                        break;
+                    case 1:
+                        AlterFilteredNotesByContent();
+                        break;
+                    case 2:
+                        AlterFilteredNotesByTag();
+                        break;
+                    case 3:
+                        CreateNote();
+                        break;
+                    case 4:
+                        ReadAllTags();
+                        break;
+                    case 5:
+                        CreateTag();
+                        break;
+                    case 6:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Menu();
+                        break;
+                }
+            }
+        }
 
-            switch (mainMenu.ExSM())
+        static void ShortMenu()
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            Menu mainMenu = new Menu("----- Меню ----- ", new string[] { "Бележки", "Етикети", "Изход от приложението" });
+            while (true)
+            {
+                switch (mainMenu.ExSM())
+                {
+                    case 0:
+                        NotesMenu();
+                        break;
+                    case 1:
+                        TagMenu();
+                        break;
+                    case 2:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Menu();
+                        break;
+                }
+            }
+        }
+
+        static void NotesMenu()
+        {
+            Console.Clear();
+            Menu notesMenu = new Menu("----- Меню ----- ", new string[] { "Всички бележки", "Търсене по съдържание", "Търсене по етикет", "Нова бележка", "Върни се в главното меню" });
+            switch (notesMenu.ExSM())
             {
                 case 0:
                     Console.Clear();
@@ -40,14 +96,30 @@ namespace ConsolePresentationalLayer
                 case 3:
                     CreateNote();
                     break;
-                case 4:
+                case 6:
+                    break;
+                default:
+                    Menu();
+                    break;
+            }
+        }
+
+        static void TagMenu()
+        {
+            Console.Clear();
+            Menu mainMenu = new Menu("----- Меню ----- ", new string[] { "Всички етикети", "Нов етикет", "Delete a tag", "Върни се в главното меню" });
+            switch (mainMenu.ExSM())
+            {
+                case 0:
                     ReadAllTags();
                     break;
-                case 5:
+                case 1:
                     CreateTag();
                     break;
-                case 6:
-                    Environment.Exit(0);
+                case 2:
+                    DeleteTag();
+                    break;
+                case 3:
                     break;
                 default:
                     Menu();
@@ -117,7 +189,7 @@ namespace ConsolePresentationalLayer
             Console.Write("Съдържание: ");
             string tagContent = Console.ReadLine().Trim().ToLower();
 
-            while (tagContent != "и" || !IsTagValid(tagContent))
+            while (tagContent != "и" && !IsTagValid(tagContent))
             {
                 Console.Write("Съдържание ('и' за изход): ");
                 tagContent = Console.ReadLine().Trim().ToLower();
@@ -194,6 +266,12 @@ namespace ConsolePresentationalLayer
             }
             return;
         }
+
+        private static void DeleteTag()
+        {
+            throw new NotImplementedException();
+        }
+
 
         static void AlterFilteredNotesByContent()
         {
@@ -387,6 +465,7 @@ namespace ConsolePresentationalLayer
             }*/
         }
 
+        //Change it so that only the tags that aren't attached to the note are shown as options
         static void AddTagToNote(int noteID)
         {
             Console.WriteLine();

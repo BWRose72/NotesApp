@@ -29,7 +29,7 @@ namespace BusinessLogicLayer
 
         public bool CreateTag(string tagContent)
         {
-            return tagsDAL.CreateTag(tagContent);
+            return tagsDAL.CreateTag(tagContent.ToLower());
         }
 
         public bool AddTagToNote(int noteID, int tagID)
