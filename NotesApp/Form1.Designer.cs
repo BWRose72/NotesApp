@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            page6_SearchNotes = new TabPage();
-            cmbBox_PG6 = new ComboBox();
-            list_NotesPG6 = new ListBox();
+            page7_SearchNotes = new TabPage();
+            cmbBox_PG7 = new ComboBox();
+            list_NotesPG7 = new ListBox();
             label17 = new Label();
-            rich_NoteDescriptionPG6 = new RichTextBox();
-            btn_SearcNotes = new Button();
+            rich_NoteDescriptionPG7 = new RichTextBox();
+            btn_SearcNotesPG7 = new Button();
             label16 = new Label();
             label15 = new Label();
             page5_UpdateNote = new TabPage();
@@ -71,53 +71,62 @@
             list_NotesPG1 = new ListBox();
             label1 = new Label();
             tabControl1 = new TabControl();
-            page6_SearchNotes.SuspendLayout();
+            tabPage1 = new TabPage();
+            list_NotesPG6 = new ListBox();
+            label9 = new Label();
+            rich_NotesPG6 = new RichTextBox();
+            btn_SearchNotesPG6 = new Button();
+            label11 = new Label();
+            label14 = new Label();
+            text_NoteContentPG6 = new TextBox();
+            page7_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
             page3_CreateTag.SuspendLayout();
             page2_CreateNote.SuspendLayout();
             page1_Notes.SuspendLayout();
             tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
             SuspendLayout();
             // 
-            // page6_SearchNotes
+            // page7_SearchNotes
             // 
-            page6_SearchNotes.BackColor = Color.Wheat;
-            page6_SearchNotes.Controls.Add(cmbBox_PG6);
-            page6_SearchNotes.Controls.Add(list_NotesPG6);
-            page6_SearchNotes.Controls.Add(label17);
-            page6_SearchNotes.Controls.Add(rich_NoteDescriptionPG6);
-            page6_SearchNotes.Controls.Add(btn_SearcNotes);
-            page6_SearchNotes.Controls.Add(label16);
-            page6_SearchNotes.Controls.Add(label15);
-            page6_SearchNotes.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            page6_SearchNotes.ForeColor = Color.SaddleBrown;
-            page6_SearchNotes.Location = new Point(4, 29);
-            page6_SearchNotes.Name = "page6_SearchNotes";
-            page6_SearchNotes.Padding = new Padding(3);
-            page6_SearchNotes.Size = new Size(1130, 604);
-            page6_SearchNotes.TabIndex = 6;
-            page6_SearchNotes.Text = "Търсене по етикет";
+            page7_SearchNotes.BackColor = Color.Wheat;
+            page7_SearchNotes.Controls.Add(cmbBox_PG7);
+            page7_SearchNotes.Controls.Add(list_NotesPG7);
+            page7_SearchNotes.Controls.Add(label17);
+            page7_SearchNotes.Controls.Add(rich_NoteDescriptionPG7);
+            page7_SearchNotes.Controls.Add(btn_SearcNotesPG7);
+            page7_SearchNotes.Controls.Add(label16);
+            page7_SearchNotes.Controls.Add(label15);
+            page7_SearchNotes.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            page7_SearchNotes.ForeColor = Color.SaddleBrown;
+            page7_SearchNotes.Location = new Point(4, 29);
+            page7_SearchNotes.Name = "page7_SearchNotes";
+            page7_SearchNotes.Padding = new Padding(3);
+            page7_SearchNotes.Size = new Size(1130, 604);
+            page7_SearchNotes.TabIndex = 6;
+            page7_SearchNotes.Text = "Търсене по етикет";
             // 
-            // cmbBox_PG6
+            // cmbBox_PG7
             // 
-            cmbBox_PG6.FormattingEnabled = true;
-            cmbBox_PG6.Location = new Point(147, 55);
-            cmbBox_PG6.Name = "cmbBox_PG6";
-            cmbBox_PG6.Size = new Size(448, 36);
-            cmbBox_PG6.TabIndex = 7;
+            cmbBox_PG7.FormattingEnabled = true;
+            cmbBox_PG7.Location = new Point(147, 55);
+            cmbBox_PG7.Name = "cmbBox_PG7";
+            cmbBox_PG7.Size = new Size(448, 36);
+            cmbBox_PG7.TabIndex = 7;
             // 
-            // list_NotesPG6
+            // list_NotesPG7
             // 
-            list_NotesPG6.BackColor = Color.AntiqueWhite;
-            list_NotesPG6.ForeColor = Color.SaddleBrown;
-            list_NotesPG6.FormattingEnabled = true;
-            list_NotesPG6.ItemHeight = 28;
-            list_NotesPG6.Location = new Point(43, 155);
-            list_NotesPG6.Name = "list_NotesPG6";
-            list_NotesPG6.Size = new Size(359, 424);
-            list_NotesPG6.TabIndex = 6;
-            list_NotesPG6.SelectedIndexChanged += list_NotesPG6_SelectedIndexChanged;
+            list_NotesPG7.BackColor = Color.AntiqueWhite;
+            list_NotesPG7.ForeColor = Color.SaddleBrown;
+            list_NotesPG7.FormattingEnabled = true;
+            list_NotesPG7.ItemHeight = 28;
+            list_NotesPG7.Location = new Point(43, 155);
+            list_NotesPG7.Name = "list_NotesPG7";
+            list_NotesPG7.Size = new Size(359, 424);
+            list_NotesPG7.TabIndex = 6;
+            list_NotesPG7.SelectedIndexChanged += list_NotesPG7_SelectedIndexChanged;
             // 
             // label17
             // 
@@ -128,28 +137,28 @@
             label17.TabIndex = 5;
             label17.Text = "Съдържание:";
             // 
-            // rich_NoteDescriptionPG6
+            // rich_NoteDescriptionPG7
             // 
-            rich_NoteDescriptionPG6.BackColor = Color.AntiqueWhite;
-            rich_NoteDescriptionPG6.ForeColor = Color.SaddleBrown;
-            rich_NoteDescriptionPG6.Location = new Point(452, 155);
-            rich_NoteDescriptionPG6.Name = "rich_NoteDescriptionPG6";
-            rich_NoteDescriptionPG6.ReadOnly = true;
-            rich_NoteDescriptionPG6.Size = new Size(631, 424);
-            rich_NoteDescriptionPG6.TabIndex = 4;
-            rich_NoteDescriptionPG6.Text = "";
-            rich_NoteDescriptionPG6.TextChanged += rich_NoteDescriptionPG6_TextChanged;
+            rich_NoteDescriptionPG7.BackColor = Color.AntiqueWhite;
+            rich_NoteDescriptionPG7.ForeColor = Color.SaddleBrown;
+            rich_NoteDescriptionPG7.Location = new Point(452, 155);
+            rich_NoteDescriptionPG7.Name = "rich_NoteDescriptionPG7";
+            rich_NoteDescriptionPG7.ReadOnly = true;
+            rich_NoteDescriptionPG7.Size = new Size(631, 424);
+            rich_NoteDescriptionPG7.TabIndex = 4;
+            rich_NoteDescriptionPG7.Text = "";
+            rich_NoteDescriptionPG7.TextChanged += rich_NoteDescriptionPG6_TextChanged;
             // 
-            // btn_SearcNotes
+            // btn_SearcNotesPG7
             // 
-            btn_SearcNotes.BackColor = Color.AntiqueWhite;
-            btn_SearcNotes.Location = new Point(644, 32);
-            btn_SearcNotes.Name = "btn_SearcNotes";
-            btn_SearcNotes.Size = new Size(439, 81);
-            btn_SearcNotes.TabIndex = 3;
-            btn_SearcNotes.Text = "Търсене на бележки";
-            btn_SearcNotes.UseVisualStyleBackColor = false;
-            btn_SearcNotes.Click += btn_SearcNotes_Click;
+            btn_SearcNotesPG7.BackColor = Color.AntiqueWhite;
+            btn_SearcNotesPG7.Location = new Point(644, 32);
+            btn_SearcNotesPG7.Name = "btn_SearcNotesPG7";
+            btn_SearcNotesPG7.Size = new Size(439, 81);
+            btn_SearcNotesPG7.TabIndex = 3;
+            btn_SearcNotesPG7.Text = "Търсене на бележки";
+            btn_SearcNotesPG7.UseVisualStyleBackColor = false;
+            btn_SearcNotesPG7.Click += btn_SearcNotes_Click;
             // 
             // label16
             // 
@@ -272,6 +281,7 @@
             list_NotesPG4.Name = "list_NotesPG4";
             list_NotesPG4.Size = new Size(447, 508);
             list_NotesPG4.TabIndex = 6;
+            list_NotesPG4.SelectedIndexChanged += list_NotesPG4_SelectedIndexChanged;
             // 
             // btn_AddTagToNote
             // 
@@ -550,13 +560,101 @@
             tabControl1.Controls.Add(page3_CreateTag);
             tabControl1.Controls.Add(page4_AddTagToNote);
             tabControl1.Controls.Add(page5_UpdateNote);
-            tabControl1.Controls.Add(page6_SearchNotes);
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(page7_SearchNotes);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1138, 637);
             tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            tabPage1.BackColor = Color.Wheat;
+            tabPage1.Controls.Add(text_NoteContentPG6);
+            tabPage1.Controls.Add(list_NotesPG6);
+            tabPage1.Controls.Add(label9);
+            tabPage1.Controls.Add(rich_NotesPG6);
+            tabPage1.Controls.Add(btn_SearchNotesPG6);
+            tabPage1.Controls.Add(label11);
+            tabPage1.Controls.Add(label14);
+            tabPage1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            tabPage1.ForeColor = Color.SaddleBrown;
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1130, 604);
+            tabPage1.TabIndex = 7;
+            tabPage1.Text = "Търсене по съдържание";
+            // 
+            // list_NotesPG6
+            // 
+            list_NotesPG6.BackColor = Color.AntiqueWhite;
+            list_NotesPG6.ForeColor = Color.SaddleBrown;
+            list_NotesPG6.FormattingEnabled = true;
+            list_NotesPG6.ItemHeight = 28;
+            list_NotesPG6.Location = new Point(45, 152);
+            list_NotesPG6.Name = "list_NotesPG6";
+            list_NotesPG6.Size = new Size(359, 424);
+            list_NotesPG6.TabIndex = 13;
+            list_NotesPG6.SelectedIndexChanged += list_NotesPG6_SelectedIndexChanged_1;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(454, 113);
+            label9.Name = "label9";
+            label9.Size = new Size(143, 28);
+            label9.TabIndex = 12;
+            label9.Text = "Съдържание:";
+            // 
+            // rich_NotesPG6
+            // 
+            rich_NotesPG6.BackColor = Color.AntiqueWhite;
+            rich_NotesPG6.ForeColor = Color.SaddleBrown;
+            rich_NotesPG6.Location = new Point(454, 152);
+            rich_NotesPG6.Name = "rich_NotesPG6";
+            rich_NotesPG6.ReadOnly = true;
+            rich_NotesPG6.Size = new Size(631, 424);
+            rich_NotesPG6.TabIndex = 11;
+            rich_NotesPG6.Text = "";
+            // 
+            // btn_SearchNotesPG6
+            // 
+            btn_SearchNotesPG6.BackColor = Color.AntiqueWhite;
+            btn_SearchNotesPG6.Location = new Point(646, 29);
+            btn_SearchNotesPG6.Name = "btn_SearchNotesPG6";
+            btn_SearchNotesPG6.Size = new Size(439, 81);
+            btn_SearchNotesPG6.TabIndex = 10;
+            btn_SearchNotesPG6.Text = "Търсене на бележки";
+            btn_SearchNotesPG6.UseVisualStyleBackColor = false;
+            btn_SearchNotesPG6.Click += btn_SearchNotesPG6_Click;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(45, 113);
+            label11.Name = "label11";
+            label11.Size = new Size(105, 28);
+            label11.TabIndex = 9;
+            label11.Text = "Бележки:";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(45, 55);
+            label14.Name = "label14";
+            label14.Size = new Size(143, 28);
+            label14.TabIndex = 8;
+            label14.Text = "Съдържание:";
+            // 
+            // text_NoteContentPG6
+            // 
+            text_NoteContentPG6.Location = new Point(189, 55);
+            text_NoteContentPG6.Name = "text_NoteContentPG6";
+            text_NoteContentPG6.Size = new Size(419, 34);
+            text_NoteContentPG6.TabIndex = 15;
             // 
             // Form1
             // 
@@ -567,8 +665,8 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Notes App";
-            page6_SearchNotes.ResumeLayout(false);
-            page6_SearchNotes.PerformLayout();
+            page7_SearchNotes.ResumeLayout(false);
+            page7_SearchNotes.PerformLayout();
             page5_UpdateNote.ResumeLayout(false);
             page5_UpdateNote.PerformLayout();
             page4_AddTagToNote.ResumeLayout(false);
@@ -580,16 +678,18 @@
             page1_Notes.ResumeLayout(false);
             page1_Notes.PerformLayout();
             tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TabPage page6_SearchNotes;
-        private ListBox list_NotesPG6;
+        private TabPage page7_SearchNotes;
+        private ListBox list_NotesPG7;
         private Label label17;
-        private RichTextBox rich_NoteDescriptionPG6;
-        private Button btn_SearcNotes;
+        private RichTextBox rich_NoteDescriptionPG7;
+        private Button btn_SearcNotesPG7;
         private Label label16;
         private Label label15;
         private TabPage page5_UpdateNote;
@@ -624,8 +724,16 @@
         private Button btn_CreateNote;
         private RichTextBox rich_NoteDescriptionPG2;
         private Button btn_DeleteTags;
-        private ComboBox cmbBox_PG6;
+        private ComboBox cmbBox_PG7;
         private RichTextBox rich_NoteContentPG1;
         private Label label3;
+        private TabPage tabPage1;
+        private ListBox list_NotesPG6;
+        private Label label9;
+        private RichTextBox rich_NotesPG6;
+        private Button btn_SearchNotesPG6;
+        private Label label11;
+        private Label label14;
+        private TextBox text_NoteContentPG6;
     }
 }

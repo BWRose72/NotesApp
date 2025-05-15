@@ -25,6 +25,7 @@ namespace NotesApp
             list_NotesPG4.Items.Clear();
             list_NotesPG5.Items.Clear();
             list_NotesPG6.Items.Clear();
+            list_NotesPG7.Items.Clear();
 
             foreach (var note in notes)
             {
@@ -33,6 +34,7 @@ namespace NotesApp
                 list_NotesPG4.Items.Add(item);
                 list_NotesPG5.Items.Add(item);
                 list_NotesPG6.Items.Add(item);
+                list_NotesPG7.Items.Add(item);
             }
         }
 
@@ -41,12 +43,12 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
 
             list_TagsPG3.Items.Clear();
-            list_TagsPG4.Items.Clear();
-            cmbBox_PG6.Items.Clear();
+            //list_TagsPG4.Items.Clear();
+            cmbBox_PG7.Items.Clear();
 
             list_TagsPG3.Items.AddRange(tags.ToArray());
-            list_TagsPG4.Items.AddRange(tags.ToArray());
-            cmbBox_PG6.Items.AddRange(tagsServices.GetAllTags().ToArray());
+            //list_TagsPG4.Items.AddRange(tags.ToArray());
+            cmbBox_PG7.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
         private void btn_DeleteNote_Click(object sender, EventArgs e)
@@ -73,7 +75,7 @@ namespace NotesApp
             list_NotesPG1.Items.Remove(note);
             list_NotesPG4.Items.Remove(note);
             list_NotesPG5.Items.Remove(note);
-            list_NotesPG6.Items.Remove(note);
+            list_NotesPG7.Items.Remove(note);
 
             MessageBox.Show("Бележката е изтрита!");
         }
@@ -190,16 +192,16 @@ namespace NotesApp
         private void btn_SearcNotes_Click(object sender, EventArgs e)
         {
 
-            if (cmbBox_PG6.SelectedItem == null)
+            if (cmbBox_PG7.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете етикет!");
                 return;
             }
 
-            list_NotesPG6.Items.Clear();
-            foreach (var note in noteServices.GetFilteredNotes(cmbBox_PG6.SelectedItem.ToString()))
+            list_NotesPG7.Items.Clear();
+            foreach (var note in noteServices.GetFilteredNotes(cmbBox_PG7.SelectedItem.ToString()))
             {
-                list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
+                list_NotesPG7.Items.Add(note.Item1 + ": " + note.Item2);
             }
         }
 
@@ -251,22 +253,68 @@ namespace NotesApp
 
         private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)
         {
-            string note = list_NotesPG6.SelectedItem.ToString();
+            string note = list_NotesPG7.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
-            rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
+            rich_NoteDescriptionPG7.Text = noteServices.GetNoteContents(noteId);
         }
 
-        private void list_NotesPG6_SelectedIndexChanged(object sender, EventArgs e)
+        private void list_NotesPG7_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (list_NotesPG6.SelectedItem == null)
+            if (list_NotesPG7.SelectedItem == null)
+            {
+                return;
+            }
+            string note = list_NotesPG7.SelectedItem.ToString();
+            string[] noteInfo = note.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+            rich_NoteDescriptionPG7.Text = noteServices.GetNoteContents(noteId);
+        }
+        private void list_NotesPG4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            list_TagsPG4.Items.Clear();
+            if (list_NotesPG4.SelectedItem == null)
+            {
+                return;
+            }
+
+            string selectedNote = list_NotesPG4.SelectedItem.ToString();
+            string[] noteInfo = selectedNote.Split(": ");
+            int noteId = int.Parse(noteInfo[0]);
+
+
+         var freeTags = tagsServices.GetFreeTagsById(noteId);
+            foreach ( var tag in freeTags )
+            {
+                list_TagsPG4.Items.Add($"{tagsServices.GetTagIDFromContent(tag)}: {tag}");
+            }
+          
+          
+        }
+
+        private void btn_SearchNotesPG6_Click(object sender, EventArgs e)
+        {
+            if (text_NoteContentPG6==null)
+            {
+                MessageBox.Show("Моля напишете съдържание!");
+                return;
+            }
+            foreach (var note in noteServices.GetNotesByContent(text_NoteContentPG6.Text.Trim()))
+            {
+                list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
+            }
+        }
+
+        private void list_NotesPG6_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (list_NotesPG7.SelectedItem == null)
             {
                 return;
             }
             string note = list_NotesPG6.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
-            rich_NoteDescriptionPG6.Text = noteServices.GetNoteContents(noteId);
+            rich_NotesPG6.Text = noteServices.GetNoteContents(noteId);
         }
     }
 }

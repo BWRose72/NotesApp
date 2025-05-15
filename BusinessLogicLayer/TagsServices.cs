@@ -21,7 +21,19 @@ namespace BusinessLogicLayer
         {
             return tagsDAL.GetAllTags();
         }
-
+        public List<string> GetFreeTagsById(int noteId)
+        {
+            List<string> allTags = GetAllTags();
+            List<string> noteTags = GetNoteTags(noteId);
+            foreach (var item in noteTags)
+            {
+                if (allTags.Contains(item))
+                {
+                    allTags.Remove(item);
+                }
+            }
+            return allTags;
+        }
         public List<string> GetNoteTags(int noteID)
         {
             return tagsDAL.GetNoteTags(noteID);
