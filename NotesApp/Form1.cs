@@ -282,14 +282,11 @@ namespace NotesApp
             string[] noteInfo = selectedNote.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
-
-         var freeTags = tagsServices.GetFreeTagsById(noteId);
-            foreach ( var tag in freeTags )
+            var freeTags = tagsServices.GetFreeTagsById(noteId);
+            foreach (var tag in freeTags)
             {
                 list_TagsPG4.Items.Add($"{tagsServices.GetTagIDFromContent(tag)}: {tag}");
             }
-          
-          
         }
 
         private void btn_SearchNotesPG6_Click(object sender, EventArgs e)
