@@ -159,13 +159,15 @@ namespace NotesApp
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
-            List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(' ').ToList();
-            int tagId = tagsServices.GetTagIDFromContent(list_TagsPG4.SelectedItem.ToString());
+            List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(": ").ToList();
+            int tagId = int.Parse(selectedTag[0]);
+            //int tagId = tagsServices.GetTagIDFromContent(list_TagsPG4.SelectedItem.ToString());
 
             try
             {
                 tagsServices.AddTagToNote(noteId, tagId);
                 MessageBox.Show("Етикетът е добавен към бележката.");
+                list_NotesPG4_SelectedIndexChanged(sender, e);
             }
             catch (Exception)
             {
