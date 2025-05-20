@@ -286,7 +286,6 @@ namespace ConsolePresentationalLayer
             {
                 Console.WriteLine("Няма бележки с тaкова съдържание. Натиснете Enter, за да се върнете в менюто.");
                 Console.ReadLine();
-                Console.Clear();
                 Menu();
             }
 
