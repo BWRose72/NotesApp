@@ -21,6 +21,7 @@ namespace BusinessLogicLayer
         {
             return tagsDAL.GetAllTags();
         }
+
         public List<string> GetFreeTagsById(int noteId)
         {
             List<string> allTags = GetAllTags();
@@ -34,6 +35,7 @@ namespace BusinessLogicLayer
             }
             return allTags;
         }
+
         public List<string> GetNoteTags(int noteID)
         {
             return tagsDAL.GetNoteTags(noteID);
@@ -49,11 +51,6 @@ namespace BusinessLogicLayer
             return tagsDAL.AddTagToNote(noteID, tagID);
         }
 
-        public bool DoesNoteHaveTag(int noteID, int tagID)
-        {
-            return tagsDAL.DoesNoteHaveTag(noteID, tagID);
-        }
-
         public bool DeleteTag(int tagID)
         {
             return tagsDAL.DeleteTag(tagID);
@@ -62,11 +59,6 @@ namespace BusinessLogicLayer
         public int GetTagIDFromContent(string tagContent)
         {
             return tagsDAL.GetTagIDFromContent(tagContent);
-        }
-
-        public bool CheckIfNoteTagExists(int tagID, int noteID)
-        {
-            return tagsDAL.CheckIfNoteTagExists(tagID, noteID);
         }
     }
 }

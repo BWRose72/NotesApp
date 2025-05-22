@@ -71,19 +71,6 @@ namespace DataAcessLayer
             return isTagAdded;
         }
 
-        public bool DoesNoteHaveTag(int noteID, int tagID)
-        {
-            bool noteHasTag = false;
-            using (SqlConnection conn = DatabaseHelper.GetConnection())
-            {
-                conn.Open();
-                SqlCommand noteHasTagCMD = new SqlCommand($"SELECT COUNT(*) FROM NotesTags WHERE NoteID = {noteID} AND TagID = {tagID})", conn);
-                if ((int)noteHasTagCMD.ExecuteScalar() != 0)
-                    noteHasTag = true;
-            }
-            return noteHasTag;
-        }
-
         public bool DeleteTag(int tagID)
         {
             bool tagDeleted = false;
@@ -110,19 +97,6 @@ namespace DataAcessLayer
                 tagID = (int)getTagIDCMD.ExecuteScalar();
             }
             return tagID;
-        }
-
-        public bool CheckIfNoteTagExists(int tagID, int noteID)
-        {
-            bool tagExists = false;
-            using (SqlConnection conn = DatabaseHelper.GetConnection())
-            {
-                conn.Open();
-                SqlCommand checkTagCMD = new SqlCommand($"SELECT COUNT(*) FROM NotesTags WHERE TagID = {tagID} AND NoteID = {noteID}", conn);
-                if ((int)checkTagCMD.ExecuteScalar() > 0)
-                    tagExists = true;
-            }
-            return tagExists;
         }
     }
 }
