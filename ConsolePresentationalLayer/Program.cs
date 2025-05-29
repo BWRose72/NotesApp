@@ -19,7 +19,6 @@ namespace ConsolePresentationalLayer
 
         static void Menu()
         {
-            Console.CursorVisible = false;
             Menu mainMenu = new Menu("----- Меню ----- ", new string[] { "Бележки", "Етикети", "Изход от приложението" });
             while (true)
             {
@@ -206,7 +205,7 @@ namespace ConsolePresentationalLayer
                     AddTagToNote(note.Item1);
                     break;
                 case 3:
-                    ExportNoteToFile(note.Item1, note.Item2);
+                    ExportNoteToFile(note.Item1);
                     break;
                 case 4:
                     Console.Clear();
@@ -325,22 +324,29 @@ namespace ConsolePresentationalLayer
             AlterNote(PrintNotes(filteredNotes));
         }
 
-        static void ExportNoteToFile(int noteID, string noteTitle)
+        //Rework the name of the file
+        static void ExportNoteToFile(int noteID)
         {
             Console.Clear();
             Console.WriteLine("----- Запазване на бележка като текстов файл -----");
+
+            Console.Write("Име на файла: ");
+            string fileName = Console.ReadLine();
+
+            //Check if the fileName doesn't have any invalid characters
+
             Menu menu = new Menu("Къде искате да запазите тази бележка?",
                 new string[] { "На Работения плот", "В папката Документи", "Връщане в Меню" });
 
             switch (menu.ExSM())
             {
                 case 0:
-                    FileSaver.SaveFileToDesktop(noteTitle,
+                    FileSaver.SaveFileToDesktop(fileName,
                         notesServices.GetNoteContents(noteID),
                         tagsServices.GetNoteTags(noteID).ToArray());
                     break;
                 case 1:
-                    FileSaver.SaveFileToDocuments(noteTitle,
+                    FileSaver.SaveFileToDocuments(fileName,
                         notesServices.GetNoteContents(noteID),
                         tagsServices.GetNoteTags(noteID).ToArray());
                     break;
@@ -378,12 +384,17 @@ namespace ConsolePresentationalLayer
             var freeTags = tagsServices.GetFreeTagsById(noteID);
             int tagCount = PrintTags(freeTags);
 
-            Console.Write("Номер на етикета: ");
+            Console.Write("Номер на етикета (въведете 0, за да се върнете в менюто): ");
             int tagID;
 
-            while (!int.TryParse(Console.ReadLine().Trim(), out tagID) || freeTags.Count < tagID)
+            while ((!int.TryParse(Console.ReadLine().Trim(), out tagID) || freeTags.Count < tagID) && tagID != 0)
             {
-                Console.WriteLine("Моля въведете валиден номер.\nНомер на етикета: ");
+                Console.Write("Моля въведете валиден номер.\nНомер на етикета: ");
+            }
+
+            if (tagID == 0)
+            {
+                return;
             }
 
             try
@@ -435,12 +446,17 @@ namespace ConsolePresentationalLayer
                 Console.WriteLine($"{it.Item1 + 1}: {it.Item2}");
             }
 
-            Console.Write("Въведете номерът на бележката: ");
+            Console.Write("Въведете номерът на бележката (въведете 0, за да се върнете в менюто): ");
             int noteID;
-            while (!int.TryParse(Console.ReadLine(), out noteID) || !notes.Select(it => it.Item1).Contains(noteID - 1))
+            while ((!int.TryParse(Console.ReadLine(), out noteID) || !notes.Select(it => it.Item1).Contains(noteID - 1)) && noteID != 0)
             {
                 Console.WriteLine("Нещо се обърка. Моля въведете валиден номер!");
                 Console.Write("Въведете номерът на бележката: ");
+            }
+
+            if (noteID == 0)
+            {
+                Menu();
             }
 
             return notes.First(it => it.Item1 == noteID - 1);
@@ -465,7 +481,6 @@ namespace ConsolePresentationalLayer
 
         static string GetNoteContents()
         {
-            Console.CursorVisible = true;
             Console.WriteLine("\nСъдържание (въведете 'стоп', за да приключите с писането): ");
             string contents = "";
             string line = Console.ReadLine().Trim();
@@ -475,7 +490,6 @@ namespace ConsolePresentationalLayer
                 contents += "\n" + line;
                 line = Console.ReadLine();
             }
-            Console.CursorVisible = false;
             return contents;
         }
 

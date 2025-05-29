@@ -42,6 +42,7 @@ namespace ConsolePresentationalLayer
 
         public int ExSM()
         {
+            Console.CursorVisible = false;
             Console.WriteLine(tx);
             currCurP = Console.CursorTop;
             ConsoleKey prKey;
@@ -73,6 +74,7 @@ namespace ConsolePresentationalLayer
 
             } while (prKey != ConsoleKey.Enter);
 
+            Console.CursorVisible = true;
             return position;
         }
 
