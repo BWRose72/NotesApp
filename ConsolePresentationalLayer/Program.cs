@@ -324,7 +324,7 @@ namespace ConsolePresentationalLayer
             AlterNote(PrintNotes(filteredNotes));
         }
 
-        //Rework the name of the file
+        //Check if a file with the same name doesn't already exist
         static void ExportNoteToFile(int noteID)
         {
             Console.Clear();
@@ -333,7 +333,12 @@ namespace ConsolePresentationalLayer
             Console.Write("Име на файла: ");
             string fileName = Console.ReadLine();
 
-            //Check if the fileName doesn't have any invalid characters
+            while (Path.GetInvalidFileNameChars().Any(fileName.Contains))
+            {
+                Console.WriteLine("Името не трябва да съдържа тези знаци: \" < > | ␦  * ? \\ /");
+                Console.Write("Име на файла: ");
+                fileName = Console.ReadLine();
+            }
 
             Menu menu = new Menu("Къде искате да запазите тази бележка?",
                 new string[] { "На Работения плот", "В папката Документи", "Връщане в Меню" });
