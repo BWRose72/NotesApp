@@ -164,7 +164,7 @@ namespace ConsolePresentationalLayer
                 return;
             }
 
-            Menu yesNoMenu = new Menu($"Искате ли да запазите този етикет: {tagContent}?", new string[] { "Да", "Не" });
+            Menu yesNoMenu = new Menu($"Искате ли да запазите този етикет: {tagContent}", new string[] { "Да", "Не" });
             int comm = yesNoMenu.ExSM();
 
             if (comm == 0)
@@ -236,7 +236,7 @@ namespace ConsolePresentationalLayer
             Console.Clear();
             var allTags = tagsServices.GetAllTags();
             int tagCount = PrintTags(allTags);
-            Console.Write("Номер на етикета (въведете 0, за да се върнете към менюто): ");
+            Console.Write("Номер на етикета (натиснете Enter, за да се върнете към менюто): ");
             int tagID;
 
             while ((!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount) && tagID != 0)
@@ -299,7 +299,7 @@ namespace ConsolePresentationalLayer
             var allTags = tagsServices.GetAllTags();
             int tagCount = PrintTags(allTags);
 
-            Console.Write("Номер на етикета (въведете 0, за да се върнете към менюто): ");
+            Console.Write("Номер на етикета (натиснете Enter, за да се върнете към менюто): ");
             int tagID;
             while ((!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount) && tagID != 0)
             {
@@ -389,7 +389,7 @@ namespace ConsolePresentationalLayer
             var freeTags = tagsServices.GetFreeTagsById(noteID);
             int tagCount = PrintTags(freeTags);
 
-            Console.Write("Номер на етикета (въведете 0, за да се върнете в менюто): ");
+            Console.Write("Номер на етикета (натиснете Enter, за да се върнете в менюто): ");
             int tagID;
 
             while ((!int.TryParse(Console.ReadLine().Trim(), out tagID) || freeTags.Count < tagID) && tagID != 0)
@@ -451,7 +451,7 @@ namespace ConsolePresentationalLayer
                 Console.WriteLine($"{it.Item1 + 1}: {it.Item2}");
             }
 
-            Console.Write("Въведете номерът на бележката (въведете 0, за да се върнете в менюто): ");
+            Console.Write("Въведете номерът на бележката (натиснете Enter, за да се върнете в менюто): ");
             int noteID;
             while ((!int.TryParse(Console.ReadLine(), out noteID) || !notes.Select(it => it.Item1).Contains(noteID - 1)) && noteID != 0)
             {
