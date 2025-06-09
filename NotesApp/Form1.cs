@@ -43,11 +43,8 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
 
             list_TagsPG3.Items.Clear();
-            //list_TagsPG4.Items.Clear();
             cmbBox_PG7.Items.Clear();
-
             list_TagsPG3.Items.AddRange(tags.ToArray());
-            //list_TagsPG4.Items.AddRange(tags.ToArray());
             cmbBox_PG7.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
@@ -144,8 +141,6 @@ namespace NotesApp
 
             LoadTags();
             txt_TagNamePG3.Clear();
-
-            //MessageBox.Show("Етикетът е създаден!");
         }
 
         private void btn_AddTagToNote_Click(object sender, EventArgs e)
@@ -161,7 +156,6 @@ namespace NotesApp
 
             List<string> selectedTag = list_TagsPG4.SelectedItem.ToString().Split(": ").ToList();
             int tagId = int.Parse(selectedTag[0]);
-            //int tagId = tagsServices.GetTagIDFromContent(list_TagsPG4.SelectedItem.ToString());
 
             try
             {
@@ -240,8 +234,6 @@ namespace NotesApp
 
             list_TagsPG3.Items.Remove(tag);
             list_TagsPG4.Items.Remove(tag);
-
-            //MessageBox.Show("Етикетът е изтрит!");
         }
 
         private void list_NotesPG5_SelectedIndexChanged(object sender, EventArgs e)
