@@ -58,7 +58,7 @@ namespace BusinessLogicLayer
 
         public int GetTagIDFromContent(string tagContent)
         {
-            return tagsDAL.GetTagIDFromContent(tagContent);
+            return tagsDAL.GetTagIDFromContent(tagContent.ToLower());
         }
     }
 }
