@@ -43,11 +43,9 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
 
             list_TagsPG3.Items.Clear();
-            //list_TagsPG4.Items.Clear();
             cmbBox_PG7.Items.Clear();
 
             list_TagsPG3.Items.AddRange(tags.ToArray());
-            //list_TagsPG4.Items.AddRange(tags.ToArray());
             cmbBox_PG7.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
