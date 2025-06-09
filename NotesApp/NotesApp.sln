@@ -20,6 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{26DB3124-2D58-4ADA-8CA9-4405F6680E43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{455FDA8B-0E92-4466-BD89-75B5E16671DA}"
+	ProjectSection(SolutionItems) = preProject
+		NotesDB_diagram.png = NotesDB_diagram.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
