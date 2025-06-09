@@ -119,7 +119,7 @@ namespace ConsolePresentationalLayer
             Console.WriteLine("----- Край на бележката -----\n");
 
             Menu yesNoMenu = new Menu("Искате ли да запазите тази бележка?",
-                new string[] { "Да", "Не"});
+                new string[] { "Да", "Не" });
             int comm = yesNoMenu.ExSM();
 
             if (comm == 0)
@@ -128,7 +128,6 @@ namespace ConsolePresentationalLayer
                 {
                     Console.WriteLine("Бележката е запазена! Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
-                    Console.Clear();
                 }
                 else
                 {
@@ -173,15 +172,14 @@ namespace ConsolePresentationalLayer
                 {
                     Console.WriteLine("Етикетът е запазен! Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
-                    Console.Clear();
                 }
                 else
                 {
                     Console.WriteLine("Нещо се обърка. Моля опитайте отново. Натиснете Enter, за да се върнете в менюто.");
                     Console.ReadLine();
-                    CreateTag();
                 }
             }
+
             Menu();
         }
 
@@ -221,13 +219,14 @@ namespace ConsolePresentationalLayer
         static void DeleteNote(int noteID)
         {
             if (notesServices.DeleteNote(noteID))
-            { 
+            {
                 Console.WriteLine("Бележката беше изтрита успешно.");
             }
             else
             {
                 Console.WriteLine("Нещо се обърка. Моля пробвайте отново!");
             }
+
             return;
         }
 
@@ -276,11 +275,13 @@ namespace ConsolePresentationalLayer
         static void AlterFilteredNotesByContent()
         {
             Console.Clear();
+
             Console.WriteLine("----- Търсене по съдържание -----");
             Console.Write("Ключов израз: ");
             string keyContent = Console.ReadLine();
 
             var filteredNotes = notesServices.GetNotesByContent(keyContent);
+
             if (filteredNotes == null || filteredNotes.Count == 0)
             {
                 Console.WriteLine("Няма бележки с тaкова съдържание. Натиснете Enter, за да се върнете в менюто.");
@@ -301,6 +302,7 @@ namespace ConsolePresentationalLayer
 
             Console.Write("Номер на етикета (натиснете Enter, за да се върнете към менюто): ");
             int tagID;
+
             while ((!int.TryParse(Console.ReadLine().Trim(), out tagID) || tagID - 1 > tagCount) && tagID != 0)
             {
                 Console.WriteLine("Моля въведете валиден номер. Натиснете Enter, за да продължите.");
@@ -312,6 +314,7 @@ namespace ConsolePresentationalLayer
             }
 
             var filteredNotes = notesServices.GetFilteredNotes(allTags[tagID - 1]);
+
             if (filteredNotes == null || filteredNotes.Count == 0)
             {
                 Console.WriteLine("Няма бележки с този етикет. Натиснете Enter, за да се върнете в менюто.");
@@ -320,11 +323,10 @@ namespace ConsolePresentationalLayer
                 Menu();
             }
 
-            Console.WriteLine(  );
+            Console.WriteLine();
             AlterNote(PrintNotes(filteredNotes));
         }
 
-        //Check if a file with the same name doesn't already exist
         static void ExportNoteToFile(int noteID)
         {
             Console.Clear();
@@ -372,6 +374,7 @@ namespace ConsolePresentationalLayer
             PrintNote((noteID, noteTitle));
 
             string newContent = GetNoteContents();
+
             if (!notesServices.UpdateNoteContents(noteID, newContent))
             {
                 Console.WriteLine("Нещо се обърка. Моля пробвайте отново!");
@@ -427,10 +430,12 @@ namespace ConsolePresentationalLayer
             Console.WriteLine("----- Всички етикети ----- ");
 
             int tagsCount = tagsList.Count;
+
             for (int i = 0; i < tagsCount; i++)
             {
                 Console.WriteLine($"{i + 1}: {tagsList[i]}");
             }
+
             return tagsCount;
         }
 
@@ -440,12 +445,12 @@ namespace ConsolePresentationalLayer
             PrintTags(tagsServices.GetAllTags());
             Console.WriteLine("\nНатиснете Enter, за да се върнете в менюто.");
             Console.ReadLine();
-            Console.Clear();
         }
 
         static (int, string) PrintNotes(List<(int, string)> notes)
         {
             Console.WriteLine(" ----- Бележки ----- ");
+
             foreach (var it in notes)
             {
                 Console.WriteLine($"{it.Item1 + 1}: {it.Item2}");
@@ -453,6 +458,7 @@ namespace ConsolePresentationalLayer
 
             Console.Write("Въведете номерът на бележката (натиснете Enter, за да се върнете в менюто): ");
             int noteID;
+
             while ((!int.TryParse(Console.ReadLine(), out noteID) || !notes.Select(it => it.Item1).Contains(noteID - 1)) && noteID != 0)
             {
                 Console.WriteLine("Нещо се обърка. Моля въведете валиден номер!");
@@ -481,7 +487,6 @@ namespace ConsolePresentationalLayer
             {
                 Console.WriteLine("Етикети: " + string.Join(", ", noteTags));
             }
-
         }
 
         static string GetNoteContents()
@@ -495,6 +500,7 @@ namespace ConsolePresentationalLayer
                 contents += "\n" + line;
                 line = Console.ReadLine();
             }
+
             return contents;
         }
 
@@ -518,6 +524,7 @@ namespace ConsolePresentationalLayer
                 Console.WriteLine("Етикета не може да е празен.");
                 return false;
             }
+
             return true;
         }
     }

@@ -72,13 +72,13 @@
             label1 = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            text_NoteContentPG6 = new TextBox();
             list_NotesPG6 = new ListBox();
             label9 = new Label();
             rich_NotesPG6 = new RichTextBox();
             btn_SearchNotesPG6 = new Button();
             label11 = new Label();
             label14 = new Label();
-            text_NoteContentPG6 = new TextBox();
             page7_SearchNotes.SuspendLayout();
             page5_UpdateNote.SuspendLayout();
             page4_AddTagToNote.SuspendLayout();
@@ -342,7 +342,7 @@
             page3_CreateTag.Padding = new Padding(3);
             page3_CreateTag.Size = new Size(1130, 604);
             page3_CreateTag.TabIndex = 2;
-            page3_CreateTag.Text = "Създаване на етикет";
+            page3_CreateTag.Text = "Нов етикет";
             // 
             // btn_DeleteTags
             // 
@@ -418,7 +418,7 @@
             page2_CreateNote.Padding = new Padding(3);
             page2_CreateNote.Size = new Size(1130, 604);
             page2_CreateNote.TabIndex = 1;
-            page2_CreateNote.Text = "Създаване на бележка";
+            page2_CreateNote.Text = "Нова бележка";
             // 
             // btn_CreateNote
             // 
@@ -588,6 +588,13 @@
             tabPage1.TabIndex = 7;
             tabPage1.Text = "Търсене по съдържание";
             // 
+            // text_NoteContentPG6
+            // 
+            text_NoteContentPG6.Location = new Point(189, 55);
+            text_NoteContentPG6.Name = "text_NoteContentPG6";
+            text_NoteContentPG6.Size = new Size(419, 34);
+            text_NoteContentPG6.TabIndex = 15;
+            // 
             // list_NotesPG6
             // 
             list_NotesPG6.BackColor = Color.AntiqueWhite;
@@ -648,13 +655,6 @@
             label14.Size = new Size(143, 28);
             label14.TabIndex = 8;
             label14.Text = "Съдържание:";
-            // 
-            // text_NoteContentPG6
-            // 
-            text_NoteContentPG6.Location = new Point(189, 55);
-            text_NoteContentPG6.Name = "text_NoteContentPG6";
-            text_NoteContentPG6.Size = new Size(419, 34);
-            text_NoteContentPG6.TabIndex = 15;
             // 
             // Form1
             // 

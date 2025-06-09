@@ -14,7 +14,7 @@ namespace DataAcessLayer
 
         public static SqlConnection GetConnection()
         {
-            return new SqlConnection(connString);
+            return new SqlConnection(connString2);
         }
     }
 }

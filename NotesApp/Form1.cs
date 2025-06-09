@@ -43,8 +43,9 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
 
             list_TagsPG3.Items.Clear();
-            cmbBox_PG7.Items.Clear();
             list_TagsPG3.Items.AddRange(tags.ToArray());
+
+            cmbBox_PG7.Items.Clear();
             cmbBox_PG7.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
@@ -55,6 +56,7 @@ namespace NotesApp
                 MessageBox.Show("Моля изберете бележка!");
                 return;
             }
+
             string note = list_NotesPG1.SelectedItem.ToString();
             list_NotesPG1.ClearSelected();
             string[] noteInfo = note.Split(": ");
@@ -62,6 +64,7 @@ namespace NotesApp
 
             var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете тази бележка?",
                 "Потвърдете изтриването", MessageBoxButtons.YesNo);
+
             if (confirmResult == DialogResult.No)
             {
                 return;
@@ -120,7 +123,6 @@ namespace NotesApp
 
             noteServices.CreateNote(noteName, noteDescription);
 
-
             LoadNotes();
 
             txt_NoteName.Clear();
@@ -136,6 +138,7 @@ namespace NotesApp
                 MessageBox.Show("Моля въведете текст!");
                 return;
             }
+
             string tagName = txt_TagNamePG3.Text.Trim();
             tagsServices.CreateTag(tagName);
 
@@ -148,8 +151,10 @@ namespace NotesApp
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете бележка и етикет!");
+
                 return;
             }
+
             string note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
@@ -175,8 +180,10 @@ namespace NotesApp
             if (list_NotesPG5.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете бележка!");
+
                 return;
             }
+
             string note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
@@ -191,10 +198,12 @@ namespace NotesApp
             if (cmbBox_PG7.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете етикет!");
+
                 return;
             }
 
             list_NotesPG7.Items.Clear();
+
             foreach (var note in noteServices.GetFilteredNotes(cmbBox_PG7.SelectedItem.ToString()))
             {
                 list_NotesPG7.Items.Add(note.Item1 + ": " + note.Item2);
@@ -207,6 +216,7 @@ namespace NotesApp
             {
                 return;
             }
+
             string note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
@@ -218,13 +228,16 @@ namespace NotesApp
             if (list_TagsPG3.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете етикет!");
+
                 return;
             }
+
             string tag = list_TagsPG3.SelectedItem.ToString();
             int tagId = tagsServices.GetTagIDFromContent(tag);
 
             var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете този етикет?",
                 "Потърдете изтриването", MessageBoxButtons.YesNo);
+
             if (confirmResult == DialogResult.No)
             {
                 return;
@@ -259,11 +272,13 @@ namespace NotesApp
             {
                 return;
             }
+
             string note = list_NotesPG7.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG7.Text = noteServices.GetNoteContents(noteId);
         }
+
         private void list_NotesPG4_SelectedIndexChanged(object sender, EventArgs e)
         {
             list_TagsPG4.Items.Clear();
@@ -277,6 +292,7 @@ namespace NotesApp
             int noteId = int.Parse(noteInfo[0]);
 
             var freeTags = tagsServices.GetFreeTagsById(noteId);
+
             foreach (var tag in freeTags)
             {
                 list_TagsPG4.Items.Add($"{tagsServices.GetTagIDFromContent(tag)}: {tag}");
@@ -285,11 +301,13 @@ namespace NotesApp
 
         private void btn_SearchNotesPG6_Click(object sender, EventArgs e)
         {
-            if (text_NoteContentPG6==null)
+            if (text_NoteContentPG6 == null)
             {
                 MessageBox.Show("Моля напишете съдържание!");
+
                 return;
             }
+
             foreach (var note in noteServices.GetNotesByContent(text_NoteContentPG6.Text.Trim()))
             {
                 list_NotesPG6.Items.Add(note.Item1 + ": " + note.Item2);
@@ -302,6 +320,7 @@ namespace NotesApp
             {
                 return;
             }
+
             string note = list_NotesPG6.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
