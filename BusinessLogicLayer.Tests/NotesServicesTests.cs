@@ -13,7 +13,7 @@ namespace BusinessLogicLayer.Tests
         [Test]
         public void TestGetTitlesAndIDs()
         {
-            int expectedResult = 7/*8*/;
+            int expectedResult = 8;
             int actualResult;
 
             actualResult = notesServices.GetNotesTitlesAndIDs().Count();

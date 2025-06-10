@@ -11,7 +11,7 @@ namespace ConsolePresentationalLayer
 
         static void Main(string[] args)
         {
-            Console.Title = "Notes App";
+            Console.Title = "MyNotes";
             Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Menu();

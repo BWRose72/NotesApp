@@ -147,7 +147,6 @@
             rich_NoteDescriptionPG7.Size = new Size(631, 424);
             rich_NoteDescriptionPG7.TabIndex = 4;
             rich_NoteDescriptionPG7.Text = "";
-            rich_NoteDescriptionPG7.TextChanged += rich_NoteDescriptionPG6_TextChanged;
             // 
             // btn_SearcNotesPG7
             // 
@@ -664,7 +663,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Notes App";
+            Text = "MyNotes";
             page7_SearchNotes.ResumeLayout(false);
             page7_SearchNotes.PerformLayout();
             page5_UpdateNote.ResumeLayout(false);

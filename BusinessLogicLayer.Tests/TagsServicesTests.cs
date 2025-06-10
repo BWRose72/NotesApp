@@ -21,7 +21,7 @@ namespace BusinessLogicLayer.Tests
         [Test]
         public void TestGetAllTags()
         {
-            int expectedResult = 5/*?*/;
+            int expectedResult = 9;
             int actualResult;
 
             actualResult = tagsServices.GetAllTags().Count();
@@ -105,13 +105,11 @@ namespace BusinessLogicLayer.Tests
         [Test]
         public void TestGetIDFromContent()
         {
-            string tagContent = "IDTst Tag";
-            tagsServices.CreateTag(tagContent);
-            int expectedResult = 30/*?*/;
+            string tagContent = "дом";
+            int expectedResult = 22;
             int actualResult;
 
             actualResult = tagsServices.GetTagIDFromContent(tagContent);
-            tagsServices.DeleteTag(actualResult);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

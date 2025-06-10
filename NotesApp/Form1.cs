@@ -11,8 +11,10 @@ namespace NotesApp
         public Form1()
         {
             InitializeComponent();
+
             noteServices = new NotesServices();
             tagsServices = new TagsServices();
+
             LoadNotes();
             LoadTags();
         }
@@ -43,9 +45,8 @@ namespace NotesApp
             List<string> tags = tagsServices.GetAllTags();
 
             list_TagsPG3.Items.Clear();
-            list_TagsPG3.Items.AddRange(tags.ToArray());
-
             cmbBox_PG7.Items.Clear();
+            list_TagsPG3.Items.AddRange(tags.ToArray());
             cmbBox_PG7.Items.AddRange(tagsServices.GetAllTags().ToArray());
         }
 
@@ -57,7 +58,7 @@ namespace NotesApp
                 return;
             }
 
-            string note = list_NotesPG1.SelectedItem.ToString();
+            string? note = list_NotesPG1.SelectedItem.ToString();
             list_NotesPG1.ClearSelected();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
@@ -88,7 +89,7 @@ namespace NotesApp
                 return;
             }
 
-            string note = list_NotesPG1.SelectedItem.ToString();
+            string? note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
@@ -106,6 +107,7 @@ namespace NotesApp
 
         private void btn_CreateNote_Click(object sender, EventArgs e)
         {
+
             if (txt_TagNamePG3.Text.Trim() == null)
             {
                 MessageBox.Show("Моля въведете текст в полето за заглавие!");
@@ -120,6 +122,12 @@ namespace NotesApp
 
             string noteName = txt_NoteName.Text.Trim();
             string noteDescription = rich_NoteDescriptionPG2.Text;
+
+            if (noteName.Length <= 3 || noteName.Contains('\''))
+            {
+                MessageBox.Show("Името на бележката трябва да съдържа поне 4 букви");
+                return;
+            }
 
             noteServices.CreateNote(noteName, noteDescription);
 
@@ -151,11 +159,10 @@ namespace NotesApp
             if (list_NotesPG4.SelectedItem == null || list_TagsPG4.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете бележка и етикет!");
-
                 return;
             }
 
-            string note = list_NotesPG4.SelectedItem.ToString();
+            string? note = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
@@ -180,29 +187,28 @@ namespace NotesApp
             if (list_NotesPG5.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете бележка!");
-
                 return;
             }
 
-            string note = list_NotesPG5.SelectedItem.ToString();
+            string? note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             var noteDescription = rich_NoteDescriptionPG5.Text;
             noteServices.UpdateNoteContents(noteId, noteDescription);
+
             MessageBox.Show("Бележката е променена!");
         }
 
         private void btn_SearcNotes_Click(object sender, EventArgs e)
         {
-
             if (cmbBox_PG7.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете етикет!");
-
                 return;
             }
 
             list_NotesPG7.Items.Clear();
+            rich_NoteDescriptionPG7.Clear();
 
             foreach (var note in noteServices.GetFilteredNotes(cmbBox_PG7.SelectedItem.ToString()))
             {
@@ -217,7 +223,7 @@ namespace NotesApp
                 return;
             }
 
-            string note = list_NotesPG1.SelectedItem.ToString();
+            string? note = list_NotesPG1.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteContentPG1.Text = noteServices.GetNoteContents(noteId);
@@ -228,11 +234,10 @@ namespace NotesApp
             if (list_TagsPG3.SelectedItem == null)
             {
                 MessageBox.Show("Моля изберете етикет!");
-
                 return;
             }
 
-            string tag = list_TagsPG3.SelectedItem.ToString();
+            string? tag = list_TagsPG3.SelectedItem.ToString();
             int tagId = tagsServices.GetTagIDFromContent(tag);
 
             var confirmResult = MessageBox.Show("Сигурни ли сте, че искате да изтриете този етикет?",
@@ -251,19 +256,11 @@ namespace NotesApp
 
         private void list_NotesPG5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string note = list_NotesPG5.SelectedItem.ToString();
+            string? note = list_NotesPG5.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             label12.Text = "Етикети: " + string.Join(", ", tagsServices.GetNoteTags(noteId));
             rich_NoteDescriptionPG5.Text = noteServices.GetNoteContents(noteId);
-        }
-
-        private void rich_NoteDescriptionPG6_TextChanged(object sender, EventArgs e)
-        {
-            string note = list_NotesPG7.SelectedItem.ToString();
-            string[] noteInfo = note.Split(": ");
-            int noteId = int.Parse(noteInfo[0]);
-            rich_NoteDescriptionPG7.Text = noteServices.GetNoteContents(noteId);
         }
 
         private void list_NotesPG7_SelectedIndexChanged(object sender, EventArgs e)
@@ -273,7 +270,7 @@ namespace NotesApp
                 return;
             }
 
-            string note = list_NotesPG7.SelectedItem.ToString();
+            string? note = list_NotesPG7.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NoteDescriptionPG7.Text = noteServices.GetNoteContents(noteId);
@@ -282,12 +279,13 @@ namespace NotesApp
         private void list_NotesPG4_SelectedIndexChanged(object sender, EventArgs e)
         {
             list_TagsPG4.Items.Clear();
+
             if (list_NotesPG4.SelectedItem == null)
             {
                 return;
             }
 
-            string selectedNote = list_NotesPG4.SelectedItem.ToString();
+            string? selectedNote = list_NotesPG4.SelectedItem.ToString();
             string[] noteInfo = selectedNote.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
 
@@ -304,9 +302,11 @@ namespace NotesApp
             if (text_NoteContentPG6 == null)
             {
                 MessageBox.Show("Моля напишете съдържание!");
-
                 return;
             }
+
+            rich_NotesPG6.Clear();
+            list_NotesPG6.Items.Clear();
 
             foreach (var note in noteServices.GetNotesByContent(text_NoteContentPG6.Text.Trim()))
             {
@@ -316,12 +316,11 @@ namespace NotesApp
 
         private void list_NotesPG6_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            if (list_NotesPG7.SelectedItem == null)
+            if (list_NotesPG6.SelectedItem == null)
             {
                 return;
             }
-
-            string note = list_NotesPG6.SelectedItem.ToString();
+            string? note = list_NotesPG6.SelectedItem.ToString();
             string[] noteInfo = note.Split(": ");
             int noteId = int.Parse(noteInfo[0]);
             rich_NotesPG6.Text = noteServices.GetNoteContents(noteId);
